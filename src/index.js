@@ -4,7 +4,7 @@ import Button from './components/button'
 import Dialog from './components/dialog'
 import Board from './components/board'
 
-export const components = {
+const components = {
   Form,
   Textbox,
   Button,
@@ -20,6 +20,14 @@ const install = (Vue) => {
       Vue.component(components[i].name, components[i])
     }
   }
+}
+
+export {
+  Form,
+  Textbox,
+  Button,
+  Dialog,
+  Board
 }
 
 export default {...components, install}
