@@ -2,12 +2,14 @@ import Form from './components/form'
 import Textbox from './components/textbox'
 import Button from './components/button'
 import Dialog from './components/dialog'
+import Board from './components/board'
 
 export const components = {
   Form,
   Textbox,
   Button,
-  Dialog
+  Dialog,
+  Board
 }
 
 const install = (Vue) => {
