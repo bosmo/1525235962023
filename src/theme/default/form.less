@@ -1,0 +1,19 @@
+.ui-form-row{
+  margin-left: -4%;
+  margin-right: -4%;
+  .ui-form-row__inner{
+    display: table;
+    box-sizing: border-box;
+    width: 100%;
+    .ui-form-cell{
+      display: table-cell;
+      padding: 0 2%;
+      &:first-child{
+        padding-left: 4%;
+      }
+      &:last-child{
+        padding-right: 4%;
+      }
+    }
+  }
+}
