@@ -1,11 +1,13 @@
 <template>
   <div class="page-book">
     <div class="page-book__inner" ref="testBoard">
-      <ui-book-designer v-if="ready" :width="width" :height="height" :zoom="zoom"></ui-book-designer>
+      <ui-book-designer v-if="ready" :width="width" :height="height" :zoom="zoom" :data="pageData"></ui-book-designer>
     </div>
   </div>
 </template>
 <script>
+  import pageData from './page-data.js'
+
   export default {
     name: 'PageBookDesigner',
     data () {
@@ -15,7 +17,8 @@
         width: 0,
         height: 0,
         zoom: 1,
-        ready: false
+        ready: false,
+        pageData
       }
     },
     mounted () {

@@ -123,9 +123,10 @@ export default {
     this.widget.on('deselected', () => {
       this.$emit('deselect', this.getData())
     })
-    this.$emit('create', {
-      widget: this.widget
-    })
+    // this.$emit('create', {
+    //   widget: this.widget
+    // })
+    this.UiBoard.addWidget(this)
   },
   methods: {
     /**
@@ -140,12 +141,6 @@ export default {
         width: this.widget.width,
         height: this.widget.height
       }
-    },
-    selected () {
-
-    },
-    deselect () {
-
     },
     setLeft (left) {
       left = parseFloat(left)
@@ -169,9 +164,7 @@ export default {
     }
   },
   beforeDestroy () {
-    this.$emit('destroy', {
-      widget: this.widget
-    })
+    this.UiBoard.removeWidget(this)
   }
 }
 </script>

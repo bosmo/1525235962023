@@ -1,6 +1,6 @@
 <template>
   <div :class="['ui-book-designer', `ui-book-designer-${type}`]">
-    <ui-board class="ui-book-designer__board" :width="width" :height="height" :zoom="zoom"></ui-board>
+    <ui-board class="ui-book-designer__board" :width="width" :height="height" :zoom="zoom" :data="data"></ui-board>
     <div class="ui-book-designer__pages"></div>
   </div>
 </template>
@@ -21,6 +21,12 @@ export default {
     },
     zoom: {
       type: Number
+    },
+    data: {
+      type: Array,
+      default: () => {
+        return []
+      }
     },
     type: {
       type: String,

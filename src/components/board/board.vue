@@ -2,7 +2,7 @@
   <div class="ui-board" :style="{width: `${innerWidth}px`, height: `${innerHeight}px`}">
     <canvas class="ui-board__canvas" :id="id"></canvas>
     <template v-if="isReady">
-      <board-page></board-page>
+      <board-page v-for="(page, index) in pageData" :key="index" v-bind="page"></board-page>
     </template>
   </div>
 </template>
@@ -43,7 +43,8 @@ export default {
       innerWidth: null,
       innerHeight: null,
       innerZoom: null,
-      innerData: [],
+      widgetsList: [],
+      widgetsData: [],
       selectedItems: [],
       id: v4(),
       isReady: false
@@ -52,9 +53,25 @@ export default {
   computed: {
     dataMap () {
       const result = {}
-      this.innerData.forEach(v => {
+      this.widgetsData.forEach(v => {
         result[v.id] = v
       })
+      return result
+    },
+    pageData () {
+      const result = []
+      if (this.data) {
+        this.data.forEach((v, i) => {
+          const width = this.width / 2 / this.zoom
+          const page = Object.assign({
+            top: 0,
+            left: i * width,
+            width,
+            height: this.height / this.zoom
+          }, v)
+          result.push(page)
+        })
+      }
       return result
     }
   },
@@ -159,6 +176,36 @@ export default {
     handleItemMoving (item, data) {
       this.updateItem(item, data)
     },
+    getWidget (id) {
+      let result
+      this.widgetsList.some(v => {
+        if (v.id === id || v === id) {
+          result = v
+          return true
+        }
+      })
+      return result
+    },
+    addWidget (widget) {
+      if (this.getWidget(widget)) {
+        return
+      }
+      this.widgetsList.push(widget)
+      this.board.add(widget.widget)
+    },
+    removeWidget (widget) {
+      widget = this.getWidget(widget)
+      if (!widget) {
+        return
+      }
+      this.widgetsList = this.widgetsList.filter(v => {
+        if (v === widget) {
+          this.board.remove(widget.widget)
+          return false
+        }
+        return true
+      })
+    },
     /**
      * 更新画板项目
     */
@@ -222,13 +269,19 @@ export default {
       if (!Array.isArray(data)) {
         return
       }
-      this.$set(this, 'innerData', data)
+      let widgetsData = []
+      data.forEach(v => {
+        if (v.widgets) {
+          widgetsData = widgetsData.concat(v.widgets)
+        }
+      })
+      this.$set(this, 'widgetsData', widgetsData)
     },
     /**
      * 获取画板数据
     */
     getData () {
-      return [].concat(this.innerData)
+      return [].concat(this.data)
     },
     /**
      * 合并选区中的项目
@@ -325,7 +378,7 @@ export default {
           const group = activeSelection.toGroup()
           this.board.discardActiveObject(this.board.getActiveObject())
           const mergeItems = []
-          const newData = [].concat(this.innerData)
+          const newData = [].concat(this.widgetsData)
           const groupId = v4()
           // 组织新的分组数据
           const newGroup = {
@@ -360,7 +413,7 @@ export default {
             }
           })
           newData.push(newGroup)
-          this.$set(this, 'innerData', newData)
+          this.$set(this, 'widgetsData', newData)
           this.board.remove(group)
           resolve({
             groupId
@@ -412,11 +465,11 @@ export default {
             }
             this.board.remove($widget)
           })
-          newData = this.innerData.filter(v => {
+          newData = this.widgetsData.filter(v => {
             return v.id !== itemId
           })
           newData = newData.concat(newGroupItems)
-          this.$set(this, 'innerData', newData)
+          this.$set(this, 'widgetsData', newData)
           this.board.remove($group.widget)
           resolve({
             itemIds: newGroupItemIds
