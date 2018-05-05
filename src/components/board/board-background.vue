@@ -128,12 +128,6 @@ export default {
       hoverCursor: 'default',
       fill: this.bgColor
     })
-    fabric.util.loadImage(this.bgImageUrl, (img) => {
-      this.widget.set('fill', new fabric.Pattern({
-        img
-      }))
-      this.UiBoard.board.renderAll()
-    })
     this.pattern = new fabric.Pattern()
     this.UiBoard.board.add(this.widget)
     this.$el.remove()

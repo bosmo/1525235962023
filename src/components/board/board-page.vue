@@ -1,4 +1,5 @@
 <template>
+  <div class="ui-board-page">
     <board-background
       class="ui-board-page"
       :left="left"
@@ -28,6 +29,7 @@
         ></component>
       </template>
     </board-background>
+  </div>
 </template>
 <script>
 import boardItems from './board-items'

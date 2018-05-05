@@ -93,7 +93,7 @@ export default {
   },
   mounted () {
     this.board = new fabric.Canvas(this.id, {
-      enableRetinaScaling: false
+      enableRetinaScaling: true
     })
     // this.rect = new fabric.Rect({
     //   left: 0,

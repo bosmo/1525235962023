@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import PageForm from '../pages/form.vue'
 import Board from '../pages/board/board.vue'
-import BookDesigner from '../pages/book-designer/book-designer.vue'
+import BookDesigner from '../pages/designer/book.vue'
 
 Vue.use(Router)
 

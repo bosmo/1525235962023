@@ -1,7 +1,7 @@
 <template>
   <div :class="['ui-book-designer', `ui-book-designer-${type}`]">
     <ui-board class="ui-book-designer__board" :width="width" :height="height" :zoom="zoom" :data="data"></ui-board>
-    <div class="ui-book-designer__pages"></div>
+    <div class="ui-book-designer__fakepages"></div>
   </div>
 </template>
 <script>
