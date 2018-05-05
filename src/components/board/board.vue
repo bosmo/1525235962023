@@ -1,35 +1,21 @@
 <template>
-  <div class="board" :style="{width: `${innerWidth}px`, height: `${innerHeight}px`}">
-    <canvas :id="id"></canvas>
-    <component
-      v-if="isReady"
-      v-for="item in innerData"
-      :ref="item.id"
-      :key="item.id"
-      :id="item.id"
-      :width="item.width"
-      :height="item.height"
-      :left="item.left"
-      :top="item.top"
-      :rotate="item.rotate"
-      :scale="item.scale"
-      v-bind="item.props"
-      :is="handleRenderWidget(item.type)"
-      @create="handleItemCreate(item, $event)"
-      @destroy="handleItemDestroy(item, $event)"
-      @scaling="handleItemScaling(item, $event)"
-      @rotating="handleItemRotating(item, $event)"
-      @moving="handleItemMoving(item, $event)"
-    ></component>
+  <div class="ui-board" :style="{width: `${innerWidth}px`, height: `${innerHeight}px`}">
+    <canvas class="ui-board__canvas" :id="id"></canvas>
+    <template v-if="isReady">
+      <board-page></board-page>
+    </template>
   </div>
 </template>
 <script>
-import { fabric } from 'fabric'
 import { v4 } from 'uuid'
-import boardItems from './board-items'
+import { fabric } from 'fabric'
+import boardPage from './board-page'
 
 export default {
   name: 'UiBoard',
+  components: {
+    boardPage
+  },
   props: {
     width: {
       type: [String, Number],
@@ -46,6 +32,10 @@ export default {
     data: {
       type: Array,
       default: () => []
+    },
+    double: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -70,7 +60,7 @@ export default {
   },
   provide () {
     return {
-      Board: this
+      UiBoard: this
     }
   },
   watch: {
@@ -88,6 +78,24 @@ export default {
     this.board = new fabric.Canvas(this.id, {
       enableRetinaScaling: false
     })
+    // this.rect = new fabric.Rect({
+    //   left: 0,
+    //   top: 0,
+    //   width: 300,
+    //   height: 300,
+    //   opacity: .5
+    // })
+    // this.rect.setGradient('fill', {
+    //   x1: 0,
+    //   y1: 0,
+    //   x2: 0,
+    //   y2: 300,
+    //   colorStops: {
+    //     0: '#fff',
+    //     1: '#fff'
+    //   }
+    // })
+    // this.board.add(this.rect)
     this.board.on('selection:created', (e) => {
       this.handleRefreshSelected(e.selected)
     })
@@ -106,15 +114,6 @@ export default {
     this.setData(JSON.parse(JSON.stringify(this.data)) || [])
   },
   methods: {
-    /**
-     * 渲染动态新增的组件
-    */
-    handleRenderWidget (type) {
-      if (!boardItems[type]) {
-        throw new Error(`Not found component ${type}`)
-      }
-      return boardItems[type]
-    },
     /**
      * 新增画板项目时触发
     */
@@ -440,11 +439,8 @@ export default {
 }
 </script>
 <style>
-  .board{
+  .ui-board{
     position: relative;
-  }
-  .canvas-container{
-    position: relative;
-    z-index: 3;
+    background-color: #fff;
   }
 </style>

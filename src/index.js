@@ -3,13 +3,15 @@ import Textbox from './components/textbox'
 import Button from './components/button'
 import Dialog from './components/dialog'
 import Board from './components/board'
+import BookDesigner from './components/designer'
 
 const components = {
   Form,
   Textbox,
   Button,
   Dialog,
-  Board
+  Board,
+  BookDesigner
 }
 
 const install = (Vue) => {
@@ -27,7 +29,8 @@ export {
   Textbox,
   Button,
   Dialog,
-  Board
+  Board,
+  BookDesigner
 }
 
 export default {...components, install}

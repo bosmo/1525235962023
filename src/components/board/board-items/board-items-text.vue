@@ -92,7 +92,7 @@ export default {
       default: null
     }
   },
-  inject: ['Board'],
+  inject: ['UiBoard'],
   components: {
     WidgetProxy
   },

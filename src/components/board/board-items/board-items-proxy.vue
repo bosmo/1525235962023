@@ -45,7 +45,7 @@ export default {
       default: 0
     }
   },
-  inject: ['Board'],
+  inject: ['UiBoard'],
   methods: {
     renderStyle () {
       return {
