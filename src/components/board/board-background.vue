@@ -1,5 +1,7 @@
 <template>
-  <div class="ui-board-background"></div>
+  <div class="ui-board-background">
+    <slot></slot>
+  </div>
 </template>
 <script>
 import { fabric } from 'fabric'

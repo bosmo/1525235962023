@@ -1,5 +1,5 @@
 export default [{
-  bgColor: '#f00',
+  bgColor: '#fff',
   widgets: [{
     'type': 'text',
     'id': 'aaa',
@@ -16,14 +16,14 @@ export default [{
         'offsetX': 4,
         'offsetY': 5
       },
-      'text': 'test'
+      'text': '张胜男'
     }
   }]
 }, {
-  bgColor: '#ff0',
+  bgColor: '#fff',
   widgets: [{
     'type': 'text',
-    'id': 'aaa',
+    'id': 'bbb',
     'width': 100,
     'height': 33.89999999999999,
     'left': 126.2622950819672,
@@ -37,7 +37,7 @@ export default [{
         'offsetX': 4,
         'offsetY': 5
       },
-      'text': 'test'
+      'text': '李四光'
     }
   }]
 }]

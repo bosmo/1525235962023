@@ -123,10 +123,8 @@ export default {
     this.widget.on('deselected', () => {
       this.$emit('deselect', this.getData())
     })
-    // this.$emit('create', {
-    //   widget: this.widget
-    // })
     this.UiBoard.addWidget(this)
+    this.UiBoard.board.bringToFront(this.widget)
   },
   methods: {
     /**

@@ -1,33 +1,33 @@
 <template>
-  <div class="ui-board-page">
-    <board-alignline>
-      <board-background
-        :left="left"
-        :top="top"
-        :width="width"
-        :height="height"
-        :bgImageUrl="bgImageUrl"
-        :bgImageLeft="bgImageLeft"
-        :bgImageTop="bgImageTop"
-        :bgImageRepeat="bgImageRepeat"
-        :bgColor="bgColor"
-      ></board-background>
-      <component
-        v-for="item in widgets"
-        :ref="item.id"
-        :key="item.id"
-        :id="item.id"
-        :width="item.width"
-        :height="item.height"
-        :left="item.left"
-        :top="item.top"
-        :rotate="item.rotate"
-        :scale="item.scale"
-        v-bind="item.props"
-        :is="handleRenderWidget(item.type)"
-      ></component>
-    </board-alignline>
-  </div>
+    <board-background
+      class="ui-board-page"
+      :left="left"
+      :top="top"
+      :width="width"
+      :height="height"
+      :bgImageUrl="bgImageUrl"
+      :bgImageLeft="bgImageLeft"
+      :bgImageTop="bgImageTop"
+      :bgImageRepeat="bgImageRepeat"
+      :bgColor="bgColor"
+    >
+      <template v-if="ready">
+        <component
+          v-for="item in widgets"
+          :ref="item.id"
+          :key="item.id"
+          :id="item.id"
+          :width="item.width"
+          :height="item.height"
+          :left="item.left"
+          :top="item.top"
+          :rotate="item.rotate"
+          :scale="item.scale"
+          v-bind="item.props"
+          :is="handleRenderWidget(item.type)"
+        ></component>
+      </template>
+    </board-background>
 </template>
 <script>
 import boardItems from './board-items'
@@ -74,6 +74,14 @@ export default {
         return []
       }
     }
+  },
+  data () {
+    return {
+      ready: false
+    }
+  },
+  mounted () {
+    this.ready = true
   },
   methods: {
     /**
