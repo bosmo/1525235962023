@@ -1,6 +1,6 @@
 {
   "name": "1525235962023",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Vue.js project",
   "author": "horizon@163.com",
   "private": true,
@@ -13,6 +13,7 @@
   "dependencies": {
     "element-ui": "^2.0.8",
     "fabric": "^2.2.2",
+    "interactjs": "^1.2.9",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

@@ -2,7 +2,19 @@
   <div class="ui-board" :style="{width: `${innerWidth}px`, height: `${innerHeight}px`}">
     <canvas class="ui-board__canvas" :id="id"></canvas>
     <template v-if="isReady">
-      <board-page v-for="(page, index) in pageData" :key="index" v-bind="page"></board-page>
+      <board-page
+        v-for="(page, index) in pageData"
+        :key="index"
+        v-bind="page"
+        :zoom="zoom"
+        @dropactivate="handlePageDropactivate(page)"
+        @dragenter="handlePageDragenter(page)"
+        @dragleave="handlePageDragleave(page)"
+        @drop="handlePageDrop(page)"
+        @widget-moving="handleWidgetMoving(page, $event)"
+        @widget-scaling="handleWidgetScaling(page, $event)"
+        @widget-rotating="handleWidgetRotating(page, $event)"
+      ></board-page>
     </template>
   </div>
 </template>
@@ -132,13 +144,45 @@ export default {
   },
   methods: {
     /**
-     * 新增画板项目时触发
+     * 投放页面被激活时触发
+    */
+    handlePageDropactivate (page) {
+      this.$emit('dropactivate', {
+        page
+      })
+    },
+    /**
+     * 投放的组件移到页面上时触发
+    */
+    handlePageDragenter (page) {
+      this.$emit('dragleavepage', {
+        page
+      })
+    },
+    /**
+     * 投放的组件离开页面时触发
+    */
+    handlePageDragleave (page) {
+      this.$emit('dragleavepage', {
+        page
+      })
+    },
+    /**
+     * 页面投放组件时触发
+    */
+    handlePageDrop (page) {
+      this.$emit('drop', {
+        page
+      })
+    },
+    /**
+     * 新增画板组件时触发
     */
     handleItemCreate (item, {widget}) {
       this.board.add(widget)
     },
     /**
-     * 移除画板项目时触发
+     * 移除画板组件时触发
     */
     handleItemDestroy (item, {widget}) {
       this.board.remove(widget)
@@ -159,22 +203,22 @@ export default {
       }
     },
     /**
-     * 旋转画板项目触发
+     * 旋转画板组件触发
     */
-    handleItemRotating (item, data) {
-      this.updateItem(item, data)
+    handleWidgetRotating (item, data) {
+      this.updateWidget(item, data)
     },
     /**
-     * 缩放画板项目触发
+     * 缩放画板组件触发
     */
-    handleItemScaling (item, data) {
-      this.updateItem(item, data)
+    handleWidgetScaling (item, data) {
+      this.updateWidget(item, data)
     },
     /**
-     * 移动画板项目触发
+     * 移动画板组件触发
     */
-    handleItemMoving (item, data) {
-      this.updateItem(item, data)
+    handleWidgetMoving (item, data) {
+      this.updateWidget(item, data)
     },
     getWidget (id) {
       let result
@@ -207,9 +251,9 @@ export default {
       })
     },
     /**
-     * 更新画板项目
+     * 更新画板组件
     */
-    updateItem (item, data) {
+    updateWidget (item, data) {
       console.log(data)
       for (let i in data) {
         this.$set(item, i, data[i])
@@ -257,7 +301,7 @@ export default {
       })
     },
     /**
-     * 获取所有选中画板项目
+     * 获取所有选中画板组件
     */
     getSelecteds () {
       return [].concat(this.selectedItems)
@@ -284,7 +328,7 @@ export default {
       return [].concat(this.data)
     },
     /**
-     * 合并选区中的项目
+     * 合并选区中的组件
     */
     mergeSelectionItems () {
       return new Promise((resolve, reject) => {
@@ -317,7 +361,7 @@ export default {
       })
     },
     /**
-     * 拆分选区中的项目
+     * 拆分选区中的组件
     */
     unmergeSelectionItems () {
       this.$nextTick(() => {

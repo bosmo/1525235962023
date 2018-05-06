@@ -4,6 +4,7 @@ import Button from './components/button'
 import Dialog from './components/dialog'
 import Board from './components/board'
 import BookDesigner from './components/designer'
+import Draggable from './components/draggable'
 
 const components = {
   Form,
@@ -11,7 +12,8 @@ const components = {
   Button,
   Dialog,
   Board,
-  BookDesigner
+  BookDesigner,
+  Draggable
 }
 
 const install = (Vue) => {
@@ -30,7 +32,8 @@ export {
   Button,
   Dialog,
   Board,
-  BookDesigner
+  BookDesigner,
+  Draggable
 }
 
 export default {...components, install}

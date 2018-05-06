@@ -1,5 +1,8 @@
 <template>
   <div class="page-book">
+    <ui-draggable>
+      <div class="test" ref="test">test</div>
+    </ui-draggable>
     <div class="page-book__inner" ref="testBoard">
       <ui-book-designer v-if="ready" :width="width" :height="height" :zoom="zoom" :data="pageData"></ui-book-designer>
     </div>
@@ -7,7 +10,6 @@
 </template>
 <script>
   import pageData from './page-data.js'
-
   export default {
     name: 'PageBookDesigner',
     data () {
@@ -73,5 +75,12 @@
     bottom: 24px;
     left: 24px;
     text-align: center;
+  }
+  .test{
+    width: 100px;
+    height: 100px;
+    background: #f00;
+    z-index: 100;
+    position: relative;
   }
 </style>

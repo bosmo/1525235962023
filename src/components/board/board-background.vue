@@ -73,9 +73,10 @@ export default {
         this.$nextTick(() => {
           if (val) {
             fabric.util.loadImage(val, (img) => {
-              this.widget.set('fill', new fabric.Pattern({
-                source: img
-              }))
+              this.pattern.setOptions({
+                'source': img
+              })
+              this.widget.set('fill', this.pattern)
               this.UiBoard.board.renderAll()
             })
           } else {

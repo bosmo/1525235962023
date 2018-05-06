@@ -1,6 +1,16 @@
 <template>
   <div :class="['ui-book-designer', `ui-book-designer-${type}`]">
-    <ui-board class="ui-book-designer__board" :width="width" :height="height" :zoom="zoom" :data="data"></ui-board>
+    <ui-board class="ui-book-designer__board"
+      :width="width"
+      :height="height"
+      :zoom="zoom"
+      :data="data"
+      @page-dropactivate="handlePageDropactivate"
+      @page-dragenter="handlePageDragenter"
+      @page-dragleave="handlePageDragleave"
+      @page-drop="handlePageDrop"
+      @widget-change="handleWidgetChange"
+    ></ui-board>
     <div class="ui-book-designer__fakepages"></div>
   </div>
 </template>
@@ -39,6 +49,23 @@ export default {
   computed: {
     isSeparate () {
       return this.type === 'separate'
+    }
+  },
+  methods: {
+    handlePageDropactivate (evt) {
+      this.$emit('page-dropactivate', evt)
+    },
+    handlePageDragenter (evt) {
+      this.$emit('page-dragenter', evt)
+    },
+    handlePageDragleave (evt) {
+      this.$emit('page-dragleave', evt)
+    },
+    handlePageDrop (evt) {
+      this.$emit('page-drop', evt)
+    },
+    handleWidgetChange (evt) {
+      this.$emit('widget-change', evt)
     }
   }
 }
