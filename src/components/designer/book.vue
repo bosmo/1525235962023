@@ -9,7 +9,10 @@
       @page-dragenter="handlePageDragenter"
       @page-dragleave="handlePageDragleave"
       @page-drop="handlePageDrop"
-      @widget-change="handleWidgetChange"
+      @page-item-selected="handlePageItemSelected"
+      @page-item-scaling="handlePageItemChange('scaling', $event)"
+      @page-item-moving="handlePageItemChange('moving', $event)"
+      @page-item-rotating="handlePageItemChange('rotating', $event)"
     ></ui-board>
     <div class="ui-book-designer__fakepages"></div>
   </div>
@@ -64,8 +67,11 @@ export default {
     handlePageDrop (evt) {
       this.$emit('page-drop', evt)
     },
-    handleWidgetChange (evt) {
-      this.$emit('widget-change', evt)
+    handlePageItemChange (type, evt) {
+      this.$emit('page-item-change', {
+        type,
+        ...evt
+      })
     }
   }
 }

@@ -92,7 +92,7 @@ export default {
       default: null
     }
   },
-  inject: ['UiBoard'],
+  inject: ['UiBoardPage'],
   components: {
     WidgetProxy
   },
@@ -123,8 +123,7 @@ export default {
     this.widget.on('deselected', () => {
       this.$emit('deselect', this.getData())
     })
-    this.UiBoard.addWidget(this)
-    this.UiBoard.board.bringToFront(this.widget)
+    this.UiBoardPage.addWidget(this.widget)
   },
   methods: {
     /**
@@ -139,30 +138,10 @@ export default {
         width: this.widget.width,
         height: this.widget.height
       }
-    },
-    setLeft (left) {
-      left = parseFloat(left)
-      if (isNaN(left)) {
-        return
-      }
-      this.$nextTick(() => {
-        this.widget.left = left
-        this.Board.refresh()
-      })
-    },
-    setTop (top) {
-      top = parseFloat(top)
-      if (isNaN(top)) {
-        return
-      }
-      this.$nextTick(() => {
-        this.widget.top = top
-        this.Board.refresh()
-      })
     }
   },
   beforeDestroy () {
-    this.UiBoard.removeWidget(this)
+    this.UiBoardPage.removeWidget(this.widget)
   }
 }
 </script>

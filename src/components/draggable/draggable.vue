@@ -60,6 +60,21 @@ export default {
         this.$emit('move', event)
       },
       onend: (event) => {
+        if (event.dropzone) {
+          const realRect = this.interact.getRect($cloneNode)
+          const pageRect = event.dropzone.getRect()
+          const dropRect = {
+            left: realRect.left - pageRect.left,
+            top: realRect.top - pageRect.top,
+            width: realRect.width,
+            height: realRect.height
+          }
+          this.$emit('drop', {
+            realRect,
+            dropRect,
+            target: event.target
+          })
+        }
         $cloneNode.remove()
         $cloneNode = null
         this.$emit('end', event)

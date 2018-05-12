@@ -5,7 +5,15 @@
     <button @click="handleZoomOut">放大</button>
     <button @click="handleZoomIn">缩小</button>
     <div class="test-board" ref="testBoard">
-      <ui-board v-if="ready" :width="width" :height="height" :zoom="zoom" ref="board" :data="data" @change="handleChange" @selected="handleSelected"/>
+      <ui-board
+        v-if="ready"
+        :width="width"
+        :height="height"
+        :zoom="zoom"
+        ref="board"
+        :data="data"
+        @selected="handleSelected"
+      />
     </div>
   </div>
 </template>
@@ -117,8 +125,8 @@ export default {
     zoomTo () {
 
     },
-    handleChange (evt) {
-      console.log('aaa')
+    handlePageItemChange (evt) {
+      console.log('afewfw')
     },
     handleZoomOut () {
 

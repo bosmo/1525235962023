@@ -77,7 +77,7 @@ export default {
                 'source': img
               })
               this.widget.set('fill', this.pattern)
-              this.UiBoard.board.renderAll()
+              this.UiBoard.canvas.renderAll()
             })
           } else {
             this.widget.set('fill', this.bgColor)
@@ -92,7 +92,7 @@ export default {
           this.pattern.setOptions({
             'offsetY': val
           })
-          this.UiBoard.board.renderAll()
+          this.UiBoard.canvas.renderAll()
         })
       }
     },
@@ -104,7 +104,7 @@ export default {
             'offsetX': val
           })
         })
-        this.UiBoard.board.renderAll()
+        this.UiBoard.canvas.renderAll()
       }
     },
     bgImageRepeat: {
@@ -115,7 +115,7 @@ export default {
             'repeat': val
           })
         })
-        this.UiBoard.board.renderAll()
+        this.UiBoard.canvas.renderAll()
       }
     }
   },
@@ -130,11 +130,11 @@ export default {
       fill: this.bgColor
     })
     this.pattern = new fabric.Pattern()
-    this.UiBoard.board.add(this.widget)
+    this.UiBoard.canvas.add(this.widget)
     this.$el.remove()
   },
   beforeDestroy () {
-    this.UiBoard.board.remove(this.widget)
+    this.UiBoard.canvas.remove(this.widget)
   }
 }
 </script>
