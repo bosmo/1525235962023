@@ -38,14 +38,12 @@
 <script>
 import interact from 'interactjs'
 import boardItems from './board-items'
-import boardAlignline from './board-alignline'
 import boardBackground from './board-background'
 
 export default {
   name: 'UiBoardPage',
   components: {
-    boardBackground,
-    boardAlignline
+    boardBackground
   },
   props: {
     bgImageUrl: {
@@ -94,16 +92,16 @@ export default {
   mounted () {
     this.interact = interact(this.$el).dropzone({
       ondropactivate: (event) => {
-        this.$emit('page-dropactivate', event)
+        this.$emit('dropactivate', event)
       },
       ondragenter: (event) => {
-        this.$emit('page-dragenter', event)
+        this.$emit('dragenter', event)
       },
       ondragleave: () => {
-        this.$emit('page-dragleave', event)
+        this.$emit('dragleave', event)
       },
       ondrop: () => {
-        this.$emit('page-drop', event)
+        this.$emit('drop', event)
       }
     })
     this.ready = true

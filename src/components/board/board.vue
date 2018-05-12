@@ -147,7 +147,7 @@ export default {
      * 投放页面被激活时触发
     */
     handlePageDropactivate (page) {
-      this.$emit('dropactivate', {
+      this.$emit('page-dropactivate', {
         page
       })
     },
@@ -155,7 +155,7 @@ export default {
      * 投放的组件移到页面上时触发
     */
     handlePageDragenter (page) {
-      this.$emit('dragleavepage', {
+      this.$emit('page-dragenter', {
         page
       })
     },
@@ -163,7 +163,7 @@ export default {
      * 投放的组件离开页面时触发
     */
     handlePageDragleave (page) {
-      this.$emit('dragleavepage', {
+      this.$emit('page-dragleave', {
         page
       })
     },
@@ -171,7 +171,7 @@ export default {
      * 页面投放组件时触发
     */
     handlePageDrop (page) {
-      this.$emit('drop', {
+      this.$emit('page-drop', {
         page
       })
     },

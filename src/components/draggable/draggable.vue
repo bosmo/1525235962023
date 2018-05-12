@@ -17,12 +17,6 @@ export default {
   props: {
     selector: {
       type: String
-    },
-    allowFrom: {
-      type: String
-    },
-    ignoreFrom: {
-      type: String
     }
   },
   data () {
@@ -39,6 +33,7 @@ export default {
     }
   },
   mounted () {
+    let $cloneNode = null
     this.interact = interact(this.innerSelector).draggable({
       autoScroll: true,
       allowFrom: this.allowFrom,
@@ -47,15 +42,26 @@ export default {
         this.$emit('start', event)
       },
       onmove: (event) => {
-        let target = event.target
-        let x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-        let y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
-        target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
-        target.setAttribute('data-x', x)
-        target.setAttribute('data-y', y)
+        const taraget = event.target
+        if (!$cloneNode) {
+          const rect = taraget.getBoundingClientRect()
+          $cloneNode = taraget.cloneNode()
+          $cloneNode.innerHTML = taraget.innerHTML
+          $cloneNode.style.position = 'fixed'
+          $cloneNode.style.left = rect.x + 'px'
+          $cloneNode.style.top = rect.y + 'px'
+          $cloneNode.style.zIndex = 100
+          event.target.after($cloneNode)
+        }
+        let x = (parseFloat($cloneNode.style.left || 0)) + event.dx
+        let y = (parseFloat($cloneNode.style.top || 0)) + event.dy
+        $cloneNode.style.left = x + 'px'
+        $cloneNode.style.top = y + 'px'
         this.$emit('move', event)
       },
       onend: (event) => {
+        $cloneNode.remove()
+        $cloneNode = null
         this.$emit('end', event)
       }
     })

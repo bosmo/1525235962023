@@ -1,8 +1,13 @@
 <template>
   <div class="page-book">
-    <ui-draggable>
-      <div class="test" ref="test">test</div>
-    </ui-draggable>
+    <div style="margin: 30px">
+      <ui-draggable selector=".test">
+        <div class="test">test1</div>
+        <div class="test">test2</div>
+        <div class="test">test3</div>
+        <div class="test">test4</div>
+      </ui-draggable>
+    </div>
     <div class="page-book__inner" ref="testBoard">
       <ui-book-designer v-if="ready" :width="width" :height="height" :zoom="zoom" :data="pageData"></ui-book-designer>
     </div>
