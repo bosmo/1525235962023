@@ -72,6 +72,9 @@ export default {
         type,
         ...evt
       })
+    },
+    handlePageItemSelected (evt) {
+      this.$emit('page-item-selected', evt)
     }
   }
 }

@@ -56,17 +56,26 @@ export default {
       innerWidth: null,
       innerHeight: null,
       innerZoom: null,
-      widgetsList: [],
-      widgetsData: [],
       selectedItems: [],
       id: v4(),
       isReady: false
     }
   },
   computed: {
-    dataMap () {
-      const result = {}
-      this.widgetsData.forEach(v => {
+    pageItems () {
+      let result = []
+      if (this.data) {
+        this.data.forEach(v => {
+          if (v.items) {
+            result = result.concat(v.items)
+          }
+        })
+      }
+      return result
+    },
+    pageItemsMap () {
+      let result = {}
+      this.pageItems.forEach(v => {
         result[v.id] = v
       })
       return result
@@ -145,14 +154,16 @@ export default {
      * 刷新选中项
     */
     handleRefreshSelected (selected) {
-      const ids = []
+      const selectedItems = []
       selected.forEach(v => {
-        ids.push(v.id)
+        if (this.pageItemsMap[v.id]) {
+          selectedItems.push(this.pageItemsMap[v.id])
+        }
       })
-      this.$set(this, 'selectedItems', ids)
-      if (ids.length > 0) {
+      this.$set(this, 'selectedItems', selectedItems)
+      if (selectedItems.length > 0) {
         this.$emit('page-item-selected', {
-          selectedIds: ids
+          selecteds: selectedItems
         })
       }
     },

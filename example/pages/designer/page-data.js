@@ -1,6 +1,10 @@
 export default [{
   bgImageUrl: 'https://swiftbuckets-akmi.sf-cdn.com/v1/cmg/cell47/cdm/e9a9568f88094fde9b4eecb8ad147335/3',
   bgColor: '#fff',
+  left: 0,
+  top: 0,
+  width: 500,
+  height: 500,
   items: [{
     'type': 'text',
     'id': 'aaa',
@@ -21,6 +25,10 @@ export default [{
     }
   }]
 }, {
+  left: 500,
+  top: 0,
+  width: 500,
+  height: 500,
   bgColor: '#fff',
   bgImageUrl: 'https://swiftbuckets-akmi.sf-cdn.com/v1/cmg/cell407/cdm/5152d6ce339949edbb1bc5514f11ce08/3',
   items: [{

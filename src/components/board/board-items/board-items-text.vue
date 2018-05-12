@@ -71,8 +71,8 @@ export default {
       }
     },
     fontWeight: {
-      type: Boolean,
-      default: false
+      type: [String, Number],
+      default: 'normal'
     },
     backgroundColor: {
       type: String
