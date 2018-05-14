@@ -1,19 +1,13 @@
 <template>
-  <widget-proxy
-    :width="width"
-    :height="height"
-    :left="left"
-    :top="top"
-    :scale="scale"
-    :rotate="rotate"
-  ></widget-proxy>
+  <div class="ui-board-text" :style="renderStyle()">
+    {{text}}
+  </div>
 </template>
 <script>
 import { fabric } from 'fabric'
-import WidgetProxy from './board-items-proxy'
 
 export default {
-  name: 'board-widget-font',
+  name: 'board-widget-text',
   props: {
     id: {
       type: String,
@@ -93,9 +87,6 @@ export default {
     }
   },
   inject: ['UiBoard', 'UiBoardPage'],
-  components: {
-    WidgetProxy
-  },
   watch: {
     fontSize (val) {
       this.widget.set('fontSize', val)
@@ -120,16 +111,16 @@ export default {
       left: this.left,
       top: this.top,
       width: this.width,
-      fontSize: this.fontSize,
+      fill: 'rgba(255,0,0,0)',
       angle: this.rotate,
       scaleX: this.scale,
-      scaleY: this.scale,
-      shadow: this.shadow
+      scaleY: this.scale
     })
     this.widget.on('moving', () => {
       this.$emit('moving', this.getData())
     })
     this.widget.on('scaling', () => {
+      console.log(this.getData())
       this.$emit('scaling', this.getData())
     })
     this.widget.on('rotating', () => {
@@ -156,6 +147,16 @@ export default {
         width: this.widget.width,
         height: this.widget.height
       }
+    },
+    renderStyle () {
+      return {
+        position: 'absolute',
+        left: `${this.left}px`,
+        top: `${this.top}px`,
+        width: `${this.width}px`,
+        height: `${this.height}px`,
+        transform: `scale(${this.scale}, ${this.scale})`
+      }
     }
   },
   beforeDestroy () {
@@ -167,12 +168,5 @@ export default {
 .board-widget-text{
   position: absolute;
   z-index: 1;
-}
-.board-widget-text__coord{
-  position: absolute;
-  left: 0;
-  top: -30px;
-  height: 30px;
-  line-height: 30px;
 }
 </style>

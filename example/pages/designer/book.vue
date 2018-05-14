@@ -14,13 +14,14 @@
   </div>
 </template>
 <script>
+  import Vue from 'vue'
   import pageData from './page-data.js'
   export default {
     name: 'PageBookDesigner',
     data () {
       return {
-        realWidth: 1000,
-        realHeight: 500,
+        realWidth: 600,
+        realHeight: 300,
         width: 0,
         height: 0,
         zoom: 1,
@@ -58,8 +59,10 @@
         this.height = height
         this.zoom = width / this.realWidth
       },
-      handlePageItemChange (evt) {
-        console.log(evt)
+      handlePageItemChange ({data, item, page}) {
+        for (let i in data) {
+          Vue.set(item, i, data[i])
+        }
       }
     },
     beforeDestroy () {

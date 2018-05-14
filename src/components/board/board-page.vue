@@ -1,38 +1,26 @@
 <template>
   <div class="ui-board-page" :style="renderPageStyle()">
-    <board-background
-      :left="left"
-      :top="top"
-      :width="width"
-      :height="height"
-      :bgImageUrl="bgImageUrl"
-      :bgImageLeft="bgImageLeft"
-      :bgImageTop="bgImageTop"
-      :bgImageRepeat="bgImageRepeat"
-      :bgColor="bgColor"
-    >
-      <template v-if="ready">
-        <component
-          v-for="item in items"
-          :ref="item.id"
-          :key="item.id"
-          :id="item.id"
-          :width="item.width"
-          :height="item.height"
-          :left="item.left"
-          :top="item.top"
-          :rotate="item.rotate"
-          :scale="item.scale"
-          v-bind="item.props"
-          :is="handleRenderItem(item.type)"
-          @moving="handleItemMoving(item, $event)"
-          @scaling="handleItemScaling(item, $event)"
-          @rotating="handleItemRotating(item, $event)"
-          @selected="handleItemSelected(item)"
-          @deselect="handleItemDeselect(item)"
-        ></component>
-      </template>
-    </board-background>
+    <template v-if="ready">
+      <component
+        v-for="item in items"
+        :ref="item.id"
+        :key="item.id"
+        :id="item.id"
+        :width="item.width"
+        :height="item.height"
+        :left="item.left"
+        :top="item.top"
+        :rotate="item.rotate"
+        :scale="item.scale"
+        v-bind="item.props"
+        :is="handleRenderItem(item.type)"
+        @moving="handleItemMoving(item, $event)"
+        @scaling="handleItemScaling(item, $event)"
+        @rotating="handleItemRotating(item, $event)"
+        @selected="handleItemSelected(item)"
+        @deselect="handleItemDeselect(item)"
+      ></component>
+    </template>
   </div>
 </template>
 <script>

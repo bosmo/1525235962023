@@ -243,6 +243,6 @@ export default {
 <style>
   .ui-board{
     position: relative;
-    background-color: #fff;
+    border: 1px solid #666;
   }
 </style>
