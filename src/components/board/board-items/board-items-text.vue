@@ -92,9 +92,27 @@ export default {
       default: null
     }
   },
-  inject: ['UiBoardPage'],
+  inject: ['UiBoard', 'UiBoardPage'],
   components: {
     WidgetProxy
+  },
+  watch: {
+    fontSize (val) {
+      this.widget.set('fontSize', val)
+      this.UiBoard.refresh()
+    },
+    fontColor (val) {
+      this.widget.set('fill', val)
+      this.UiBoard.refresh()
+    },
+    fontWeight (val) {
+      this.widget.set('fontWeight', val)
+      this.UiBoard.refresh()
+    },
+    fontStyle (val) {
+      this.widget.set('fontStyle', val)
+      this.UiBoard.refresh()
+    }
   },
   mounted () {
     this.widget = new fabric.Textbox(this.text, {
