@@ -9,7 +9,7 @@
       </ui-draggable>
     </div>
     <div class="page-book__inner" ref="testBoard">
-      <ui-book-designer v-if="ready" :width="width" :height="height" :zoom="zoom" :data="pageData" @page-item-change="handlePageItemChange"></ui-book-designer>
+      <ui-book-designer v-if="ready" :width="realWidth" :height="realHeight" :zoom="zoom" :data="pageData" @page-item-change="handlePageItemChange"></ui-book-designer>
     </div>
   </div>
 </template>

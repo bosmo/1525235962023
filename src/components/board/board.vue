@@ -1,21 +1,23 @@
 <template>
-  <div class="ui-board" :style="{width: `${innerWidth}px`, height: `${innerHeight}px`}">
+  <div class="ui-board" :style="renderStyle()">
     <canvas class="ui-board__canvas" :id="id"></canvas>
     <template v-if="isReady">
-      <board-page
-        v-for="(page, index) in data"
-        :key="index"
-        v-bind="page"
-        :zoom="zoom"
-        :items="page.items"
-        @dropactivate="handlePageDropactivate(page)"
-        @dragenter="handlePageDragenter(page)"
-        @dragleave="handlePageDragleave(page)"
-        @drop="handlePageDrop(page)"
-        @item-moving="handleItemMoving(page, $event)"
-        @item-scaling="handleItemScaling(page, $event)"
-        @item-rotating="handleItemRotating(page, $event)"
-      ></board-page>
+      <div class="ui-board__main" :style="renderMainStyle()">
+        <board-page
+          v-for="(page, index) in data"
+          :key="index"
+          v-bind="page"
+          :zoom="zoom"
+          :items="page.items"
+          @dropactivate="handlePageDropactivate(page)"
+          @dragenter="handlePageDragenter(page)"
+          @dragleave="handlePageDragleave(page)"
+          @drop="handlePageDrop(page)"
+          @item-moving="handleItemMoving(page, $event)"
+          @item-scaling="handleItemScaling(page, $event)"
+          @item-rotating="handleItemRotating(page, $event)"
+        ></board-page>
+      </div>
     </template>
   </div>
 </template>
@@ -195,6 +197,7 @@ export default {
       }
       this.innerWidth = width
       this.$nextTick(() => {
+        width *= this.innerZoom
         this.canvas.setWidth(width)
       })
     },
@@ -208,6 +211,7 @@ export default {
       }
       this.innerHeight = height
       this.$nextTick(() => {
+        height *= this.innerZoom
         this.canvas.setHeight(height)
       })
     },
@@ -220,6 +224,8 @@ export default {
       }
       this.innerZoom = zoom
       this.$nextTick(() => {
+        this.canvas.setWidth(this.innerWidth * zoom)
+        this.canvas.setHeight(this.innerHeight * zoom)
         this.canvas.setZoom(zoom)
       })
     },
@@ -236,13 +242,41 @@ export default {
       this.$nextTick(() => {
         this.canvas.requestRenderAll()
       })
+    },
+    renderStyle () {
+      const width = this.innerWidth * this.zoom
+      const height = this.innerHeight * this.zoom
+      return {
+        width: `${width}px`,
+        height: `${height}px`
+      }
+    },
+    renderMainStyle () {
+      return {
+        width: `${this.innerWidth}px`,
+        height: `${this.innerHeight}px`,
+        marginTop: `${this.innerHeight * -1}px`,
+        transformOrigin: '0 100%',
+        transform: `scale(${this.zoom})`
+      }
     }
   }
 }
 </script>
-<style>
+<style lang="less">
   .ui-board{
     position: relative;
     border: 1px solid #666;
+  }
+  .ui-board__main{
+    overflow: hidden;
+    &:after{
+      content: '';
+      display: block;
+      clear: both;
+    }
+    .ui-board-page{
+      float: left;
+    }
   }
 </style>

@@ -1,6 +1,8 @@
 <template>
   <div class="ui-board-text" :style="renderStyle()">
-    {{text}}
+    <div class="ui-board-text__inner">
+      {{text}}
+    </div>
   </div>
 </template>
 <script>
@@ -87,6 +89,11 @@ export default {
     }
   },
   inject: ['UiBoard', 'UiBoardPage'],
+  data () {
+    return {
+      updateStyle: false
+    }
+  },
   watch: {
     fontSize (val) {
       this.widget.set('fontSize', val)
@@ -106,11 +113,12 @@ export default {
     }
   },
   mounted () {
-    this.widget = new fabric.Textbox(this.text, {
+    this.widget = new fabric.Rect({
       id: this.id,
       left: this.left,
       top: this.top,
       width: this.width,
+      height: this.height,
       fill: 'rgba(255,0,0,0)',
       angle: this.rotate,
       scaleX: this.scale,
@@ -120,11 +128,11 @@ export default {
       this.$emit('moving', this.getData())
     })
     this.widget.on('scaling', () => {
-      console.log(this.getData())
       this.$emit('scaling', this.getData())
     })
     this.widget.on('rotating', () => {
-      this.$emit('rotating', this.getData())
+      const { rotate } = this.getData()
+      this.$emit('rotating', { rotate })
     })
     this.widget.on('selected', () => {
       this.$emit('selected', this.getData())
@@ -133,6 +141,7 @@ export default {
       this.$emit('deselect', this.getData())
     })
     this.UiBoardPage.addWidget(this.widget)
+    this.renderStyle()
   },
   methods: {
     /**
@@ -149,14 +158,28 @@ export default {
       }
     },
     renderStyle () {
-      return {
-        position: 'absolute',
-        left: `${this.left}px`,
-        top: `${this.top}px`,
-        width: `${this.width}px`,
-        height: `${this.height}px`,
-        transform: `scale(${this.scale}, ${this.scale})`
+      let width = this.width * this.scale
+      let height = this.height * this.scale
+      let fontSize = this.fontSize * this.scale
+      let left = this.left
+      let top = this.top
+      if (this.widget) {
+        let {x, y} = this.widget.translateToGivenOrigin(this.widget.getCenterPoint(), 'center', 'center', 0, 0)
+        left = x
+        top = y
       }
+      // left = left * this.scale
+      // top = top * this.scale
+      const data = {
+        position: 'absolute',
+        left: `${left}px`,
+        top: `${top}px`,
+        width: `${width}px`,
+        height: `${height}px`,
+        fontSize: `${fontSize}px`,
+        transform: `rotate(${this.rotate}deg)`
+      }
+      return data
     }
   },
   beforeDestroy () {
@@ -165,8 +188,12 @@ export default {
 }
 </script>
 <style>
-.board-widget-text{
-  position: absolute;
-  z-index: 1;
+.ui-board-text{
+  display: table;
+}
+.ui-board-text__inner{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 </style>
