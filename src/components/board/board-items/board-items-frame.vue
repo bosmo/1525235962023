@@ -1,23 +1,15 @@
 <template>
-  <div class="ui-board-text" :style="renderStyle()">
-    <div class="ui-board-text__inner">
-      {{text}}
-    </div>
+  <div class="ui-board-frame" :style="renderStyle()">
+    <img :src="imageUrl" style="max-height: 100%; max-width: 100%;" />
   </div>
 </template>
 <script>
-import { fabric } from 'fabric'
-
 export default {
-  name: 'UiBoardText',
+  name: 'UiBoardFrame',
   props: {
     id: {
       type: String,
       required: true
-    },
-    text: {
-      type: String,
-      default: ''
     },
     left: {
       type: Number,
@@ -43,70 +35,17 @@ export default {
       type: Number,
       default: 0
     },
-    fontSize: {
-      type: Number,
-      default: 12
-    },
-    fontColor: {
-      type: String,
-      default: '#333'
-    },
-    lineHeight: {
-      type: Number,
-      default: 1.5
-    },
-    fontFace: {
-      type: String,
-      default: 'Microsoft Yahei'
-    },
-    fontStyle: {
-      type: String,
-      default: 'normal',
-      validator (value) {
-        return ['normal', 'italic', 'oblique'].indexOf(value) >= 0
-      }
-    },
-    fontWeight: {
-      type: [String, Number],
-      default: 'normal'
-    },
-    backgroundColor: {
+    imageUrl: {
       type: String
     },
-    textAlign: {
-      type: String,
-      validator (value) {
-        return ['left', 'center', 'right', 'justify', 'justify-left', 'justify-center', 'justify-right'].indexOf(value) >= 0
-      }
+    imageWidth: {
+      type: Number
     },
-    underline: {
-      type: Boolean,
-      default: false
-    },
-    shadow: {
-      type: Object,
-      default: null
+    imageHeight: {
+      type: Number
     }
   },
   inject: ['UiBoard', 'UiBoardPage'],
-  watch: {
-    fontSize (val) {
-      this.widget.set('fontSize', val)
-      this.UiBoard.refresh()
-    },
-    fontColor (val) {
-      this.widget.set('fill', val)
-      this.UiBoard.refresh()
-    },
-    fontWeight (val) {
-      this.widget.set('fontWeight', val)
-      this.UiBoard.refresh()
-    },
-    fontStyle (val) {
-      this.widget.set('fontStyle', val)
-      this.UiBoard.refresh()
-    }
-  },
   mounted () {
     this.widget = new fabric.Rect({
       id: this.id,
@@ -163,15 +102,12 @@ export default {
         left = x
         top = y
       }
-      // left = left * this.scale
-      // top = top * this.scale
       const data = {
         position: 'absolute',
         left: `${left}px`,
         top: `${top}px`,
         width: `${width}px`,
         height: `${height}px`,
-        fontSize: `${fontSize}px`,
         transform: `rotate(${this.rotate}deg)`
       }
       return data
@@ -182,13 +118,5 @@ export default {
   }
 }
 </script>
-<style>
-.ui-board-text{
-  display: table;
-}
-.ui-board-text__inner{
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-}
-</style>
+</script>
+

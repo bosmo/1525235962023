@@ -22,7 +22,7 @@
 import { fabric } from 'fabric'
 import widgets from './index'
 export default {
-  name: 'widget-group',
+  name: 'UiBoardGroup',
   props: {
     id: {
       type: String,

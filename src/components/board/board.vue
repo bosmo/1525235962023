@@ -2,7 +2,7 @@
   <div class="ui-board" :style="renderStyle()">
     <canvas class="ui-board__canvas" :id="id"></canvas>
     <template v-if="isReady">
-      <div class="ui-board__main" :style="renderMainStyle()">
+      <div class="ui-board__elements" :style="renderMainStyle()">
         <board-page
           v-for="(page, index) in data"
           :key="index"
@@ -111,6 +111,18 @@ export default {
     })
     this.canvas.on('selection:updated', (e) => {
       this.handleRefreshSelected(e.selected)
+    })
+    this.canvas.on('object:moving', (e) => {
+      console.log(e.target)
+      console.log(arguments.length)
+    })
+    this.canvas.on('object:scaling', (e) => {
+      console.log(e)
+      console.log(arguments.length)
+    })
+    this.canvas.on('object:rotating', (e) => {
+      console.log(e)
+      console.log(arguments.length)
     })
     this.isReady = true
   },
@@ -268,7 +280,7 @@ export default {
     position: relative;
     border: 1px solid #666;
   }
-  .ui-board__main{
+  .ui-board__elements{
     overflow: hidden;
     &:after{
       content: '';
