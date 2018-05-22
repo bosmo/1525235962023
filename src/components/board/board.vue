@@ -113,8 +113,26 @@ export default {
       this.handleRefreshSelected(e.selected)
     })
     this.canvas.on('object:moving', (e) => {
-      console.log(e.target)
-      console.log(arguments.length)
+      // console.log(e.target)
+      // console.log(arguments.length)
+      if (e.target.type === 'activeSelection') {
+        e.target.getObjects().forEach(v => {
+          let matrix = v.calcTransformMatrix()
+          // let options = fabric.util.qrDecompose(matrix)
+          // let center = new fabric.Point(options.translateX, options.translateY);
+          // object.flipX = false;
+          // object.flipY = false;
+          // object.set("scaleX", options.scaleX);
+          // object.set("scaleY", options.scaleY);
+          // object.skewX = options.skewX;
+          // object.skewY = options.skewY;
+          // object.angle = options.angle;
+          // object.setPositionByOrigin(center, "center", "center");
+          // return object;
+          console.log(matrix)
+        })
+        console.log('+++++++++++')
+      }
     })
     this.canvas.on('object:scaling', (e) => {
       console.log(e)

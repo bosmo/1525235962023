@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+import { fabric } from 'fabric'
 export default {
   name: 'UiBoardFrame',
   props: {
@@ -94,7 +95,6 @@ export default {
     renderStyle () {
       let width = this.width * this.scale
       let height = this.height * this.scale
-      let fontSize = this.fontSize * this.scale
       let left = this.left
       let top = this.top
       if (this.widget) {
@@ -118,5 +118,3 @@ export default {
   }
 }
 </script>
-</script>
-
