@@ -28,7 +28,11 @@ export default {
       type: Number,
       default: 0
     },
-    scale: {
+    scaleX: {
+      type: Number,
+      default: 1
+    },
+    scaleY: {
       type: Number,
       default: 1
     },
@@ -56,8 +60,8 @@ export default {
       height: this.height,
       fill: 'rgba(255,0,0,0)',
       angle: this.rotate,
-      scaleX: this.scale,
-      scaleY: this.scale
+      scaleX: this.scaleX,
+      scaleY: this.scaleY
     })
     this.widget.on('moving', () => {
       this.$emit('moving', this.getData())
@@ -87,16 +91,18 @@ export default {
         rotate: this.widget.angle,
         left: this.widget.left,
         top: this.widget.top,
-        scale: this.widget.scaleX,
+        scaleX: this.widget.scaleX,
+        scaleY: this.widget.scaleY,
         width: this.widget.width,
         height: this.widget.height
       }
     },
     renderStyle () {
-      let width = this.width * this.scale
-      let height = this.height * this.scale
+      let width = this.width * this.scaleX
+      let height = this.height * this.scaleY
       let left = this.left
       let top = this.top
+      console.log(this.width, this.scaleX)
       if (this.widget) {
         let {x, y} = this.widget.translateToGivenOrigin(this.widget.getCenterPoint(), 'center', 'center', 0, 0)
         left = x
@@ -118,3 +124,10 @@ export default {
   }
 }
 </script>
+<style lang="less">
+  .ui-board-frame{
+    background-color: #7D8791;
+    border: 1px solid #A1A5A9;
+    box-sizing: border-box;
+  }
+</style>

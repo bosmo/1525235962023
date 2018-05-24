@@ -116,8 +116,7 @@ export default {
       height: this.height,
       fill: 'rgba(255,0,0,0)',
       angle: this.rotate,
-      scaleX: this.scale,
-      scaleY: this.scale
+      scale: this.scale
     })
     this.widget.on('moving', () => {
       this.$emit('moving', this.getData())
