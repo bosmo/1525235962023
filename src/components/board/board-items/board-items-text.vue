@@ -88,7 +88,7 @@ export default {
       default: null
     }
   },
-  inject: ['UiBoard', 'UiBoardPage'],
+  inject: ['UiBoard'],
   watch: {
     fontSize (val) {
       this.widget.set('fontSize', val)
@@ -135,7 +135,7 @@ export default {
     this.widget.on('deselected', () => {
       this.$emit('deselect', this.getData())
     })
-    this.UiBoardPage.addWidget(this.widget)
+    this.UiBoard.addWidget(this.widget)
     this.renderStyle()
   },
   methods: {
@@ -178,7 +178,7 @@ export default {
     }
   },
   beforeDestroy () {
-    this.UiBoardPage.removeWidget(this.widget)
+    this.UiBoard.removeWidget(this.widget)
   }
 }
 </script>

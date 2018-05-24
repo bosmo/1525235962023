@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-import DialogContent from './dialog-content'
+import DialogContent from '../dialog/dialog-content'
 
 export default {
   name: 'PageForm',

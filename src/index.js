@@ -3,7 +3,7 @@ import Textbox from './components/textbox'
 import Button from './components/button'
 import Dialog from './components/dialog'
 import Board from './components/board'
-import BookDesigner from './components/designer'
+import Book from './components/book'
 import Draggable from './components/draggable'
 
 const components = {
@@ -12,7 +12,7 @@ const components = {
   Button,
   Dialog,
   Board,
-  BookDesigner,
+  Book,
   Draggable
 }
 
@@ -32,7 +32,7 @@ export {
   Button,
   Dialog,
   Board,
-  BookDesigner,
+  Book,
   Draggable
 }
 

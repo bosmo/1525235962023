@@ -46,7 +46,7 @@ export default {
       type: Number
     }
   },
-  inject: ['UiBoard', 'UiBoardPage'],
+  inject: ['UiBoard'],
   mounted () {
     this.widget = new fabric.Rect({
       id: this.id,
@@ -75,7 +75,7 @@ export default {
     this.widget.on('deselected', () => {
       this.$emit('deselect', this.getData())
     })
-    this.UiBoardPage.addWidget(this.widget)
+    this.UiBoard.addWidget(this.widget)
     this.renderStyle()
   },
   methods: {
@@ -114,7 +114,7 @@ export default {
     }
   },
   beforeDestroy () {
-    this.UiBoardPage.removeWidget(this.widget)
+    this.UiBoard.removeWidget(this.widget)
   }
 }
 </script>

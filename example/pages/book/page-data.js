@@ -3,7 +3,7 @@ export default [{
   bgColor: '#f00',
   left: 0,
   top: 0,
-  width: 300,
+  width: 600,
   height: 300,
   items: [{
     'type': 'text',
@@ -42,10 +42,4 @@ export default [{
       'text': '啊啊啊'
     }
   }]
-}, {
-  bgColor: '#ff0',
-  left: 300,
-  top: 0,
-  width: 300,
-  height: 300
 }]

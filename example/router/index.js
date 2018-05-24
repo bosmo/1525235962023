@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import PageForm from '../pages/form.vue'
+import PageForm from '../pages/form/form.vue'
 import Board from '../pages/board/board.vue'
-import BookDesigner from '../pages/designer/book.vue'
+import book from '../pages/book/book.vue'
 
 Vue.use(Router)
 
@@ -19,9 +19,9 @@ export default new Router({
       component: Board
     },
     {
-      path: '/book-designer',
-      name: 'BookDesigner',
-      component: BookDesigner
+      path: '/book',
+      name: 'PageBook',
+      component: book
     }
   ]
 })

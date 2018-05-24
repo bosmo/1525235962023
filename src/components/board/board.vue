@@ -1,91 +1,79 @@
 <template>
   <div class="ui-board" :style="renderStyle()">
     <canvas class="ui-board__canvas" :id="id"></canvas>
-    <template v-if="isReady">
-      <div class="ui-board__elements" :style="renderMainStyle()">
-        <board-page
-          v-for="(page, index) in data"
-          :key="index"
-          v-bind="page"
-          :zoom="zoom"
-          :items="page.items"
-          @dropactivate="handlePageDropactivate(page)"
-          @dragenter="handlePageDragenter(page)"
-          @dragleave="handlePageDragleave(page)"
-          @drop="handlePageDrop(page)"
-          @item-moving="handleItemMoving(page, $event)"
-          @item-scaling="handleItemScaling(page, $event)"
-          @item-rotating="handleItemRotating(page, $event)"
-        ></board-page>
-      </div>
-    </template>
+    <div class="ui-board__elements" v-if="ready" :style="renderElementsStyle()">
+      <component
+        v-for="item in items"
+        :ref="item.id"
+        :key="item.id"
+        :id="item.id"
+        :width="item.width"
+        :height="item.height"
+        :left="item.left"
+        :top="item.top"
+        :rotate="item.rotate"
+        :scale="item.scale"
+        v-bind="item.props"
+        :is="handleRenderItem(item.type)"
+        @moving="handleItemMoving(item, $event)"
+        @scaling="handleItemScaling(item, $event)"
+        @rotating="handleItemRotating(item, $event)"
+        @selected="handleItemSelected(item)"
+        @deselect="handleItemDeselect(item)"
+      ></component>
+    </div>
   </div>
 </template>
 <script>
 import { v4 } from 'uuid'
 import { fabric } from 'fabric'
-import boardPage from './board-page'
+import interact from 'interactjs'
+import boardItems from './board-items'
 
 export default {
   name: 'UiBoard',
-  components: {
-    boardPage
+  provide () {
+    return {
+      UiBoard: this
+    }
   },
   props: {
+    bgImageUrl: {
+      type: String
+    },
+    bgImageRepeat: {
+      type: String
+    },
+    bgImageLeft: {
+      type: [String, Number]
+    },
+    bgImageTop: {
+      type: [String, Number]
+    },
+    bgColor: {
+      type: String
+    },
     width: {
-      type: [String, Number],
-      default: 100
+      type: Number
     },
     height: {
-      type: [String, Number],
-      default: 100
+      type: Number
     },
     zoom: {
       type: Number,
       default: 1
     },
-    data: {
+    items: {
       type: Array,
-      default: () => []
-    },
-    double: {
-      type: Boolean,
-      default: true
+      default: () => {
+        return []
+      }
     }
   },
   data () {
     return {
-      innerWidth: null,
-      innerHeight: null,
-      innerZoom: null,
-      selectedItems: [],
       id: v4(),
-      isReady: false
-    }
-  },
-  computed: {
-    pageItems () {
-      let result = []
-      if (this.data) {
-        this.data.forEach(v => {
-          if (v.items) {
-            result = result.concat(v.items)
-          }
-        })
-      }
-      return result
-    },
-    pageItemsMap () {
-      let result = {}
-      this.pageItems.forEach(v => {
-        result[v.id] = v
-      })
-      return result
-    }
-  },
-  provide () {
-    return {
-      UiBoard: this
+      ready: false
     }
   },
   watch: {
@@ -101,121 +89,86 @@ export default {
   },
   mounted () {
     this.canvas = new fabric.Canvas(this.id, {
-      enableRetinaScaling: true
+      enableRetinaScaling: true,
+      selection: false
     })
-    this.canvas.on('selection:created', (e) => {
-      this.handleRefreshSelected(e.selected)
-    })
-    this.canvas.on('selection:cleared', (e) => {
-      this.handleRefreshSelected([])
-    })
-    this.canvas.on('selection:updated', (e) => {
-      this.handleRefreshSelected(e.selected)
-    })
-    this.canvas.on('object:moving', (e) => {
-      // console.log(e.target)
-      // console.log(arguments.length)
-      if (e.target.type === 'activeSelection') {
-        e.target.getObjects().forEach(v => {
-          let matrix = v.calcTransformMatrix()
-          // let options = fabric.util.qrDecompose(matrix)
-          // let center = new fabric.Point(options.translateX, options.translateY);
-          // object.flipX = false;
-          // object.flipY = false;
-          // object.set("scaleX", options.scaleX);
-          // object.set("scaleY", options.scaleY);
-          // object.skewX = options.skewX;
-          // object.skewY = options.skewY;
-          // object.angle = options.angle;
-          // object.setPositionByOrigin(center, "center", "center");
-          // return object;
-          console.log(matrix)
-        })
-        console.log('+++++++++++')
+    this.interact = interact(this.$el).dropzone({
+      ondropactivate: (event) => {
+        this.$emit('dropactivate', event)
+      },
+      ondragenter: (event) => {
+        this.$emit('dragenter', event)
+      },
+      ondragleave: () => {
+        this.$emit('dragleave', event)
+      },
+      ondrop: (event) => {
+        this.$emit('drop', event)
       }
     })
-    this.canvas.on('object:scaling', (e) => {
-      console.log(e)
-      console.log(arguments.length)
-    })
-    this.canvas.on('object:rotating', (e) => {
-      console.log(e)
-      console.log(arguments.length)
-    })
-    this.isReady = true
-  },
-  created () {
     this.setZoom(this.zoom)
     this.setWidth(this.width)
     this.setHeight(this.height)
+    this.ready = true
   },
   methods: {
     /**
-     * 投放页面被激活时触发
+     * 渲染动态新增的组件
     */
-    handlePageDropactivate (page) {
-      this.$emit('page-dropactivate', {
-        page
-      })
-    },
-    /**
-     * 投放的组件移到页面上时触发
-    */
-    handlePageDragenter (page) {
-      this.$emit('page-dragenter', {
-        page
-      })
-    },
-    /**
-     * 投放的组件离开页面时触发
-    */
-    handlePageDragleave (page) {
-      this.$emit('page-dragleave', {
-        page
-      })
-    },
-    /**
-     * 页面投放组件时触发
-    */
-    handlePageDrop (page) {
-      this.$emit('page-drop', {
-        page
-      })
-    },
-    /**
-     * 刷新选中项
-    */
-    handleRefreshSelected (selected) {
-      const selectedItems = []
-      selected.forEach(v => {
-        if (this.pageItemsMap[v.id]) {
-          selectedItems.push(this.pageItemsMap[v.id])
-        }
-      })
-      this.$set(this, 'selectedItems', selectedItems)
-      if (selectedItems.length > 0) {
-        this.$emit('page-item-selected', {
-          selecteds: selectedItems
-        })
+    handleRenderItem (type) {
+      if (!boardItems[type]) {
+        throw new Error(`Not found component ${type}`)
       }
+      return boardItems[type]
     },
-    handleItemMoving (page, evt) {
-      this.$emit('page-item-moving', {
-        page,
-        ...evt
+    /**
+     * 移动画板组件触发
+    */
+    handleItemMoving (item, evt) {
+      this.$emit('item-moving', {
+        item,
+        data: evt
       })
     },
-    handleItemScaling (page, evt) {
-      this.$emit('page-item-scaling', {
-        page,
-        ...evt
+    /**
+     * 旋转画板组件触发
+    */
+    handleItemScaling (item, evt) {
+      this.$emit('item-scaling', {
+        item,
+        data: evt
       })
     },
-    handleItemRotating (page, evt) {
-      this.$emit('page-item-rotating', {
-        page,
-        ...evt
+    /**
+     * 缩放画板组件触发
+    */
+    handleItemRotating (item, evt) {
+      this.$emit('item-rotating', {
+        item,
+        data: evt
       })
+    },
+    handleItemSelected (item) {
+      this.$emit('item-selected', {
+        item
+      })
+    },
+    handleItemDeselect (item) {
+      this.$emit('item-deselect', {
+        item
+      })
+    },
+    /**
+     * 向画布中添加组件
+    */
+    addWidget (widget) {
+      this.canvas.add(widget)
+    },
+    /**
+     * 从画布中移除组件
+    */
+    removeWidget (widget) {
+      this.canvas.remove(widget)
     },
     /**
      * 设置画板宽度
@@ -260,12 +213,6 @@ export default {
       })
     },
     /**
-     * 获取所有选中画板组件
-    */
-    getSelecteds () {
-      return [].concat(this.selectedItems)
-    },
-    /**
      * 刷新画板
     */
     refresh () {
@@ -273,6 +220,9 @@ export default {
         this.canvas.requestRenderAll()
       })
     },
+    /**
+     * 输出页面样式
+    */
     renderStyle () {
       const width = this.innerWidth * this.zoom
       const height = this.innerHeight * this.zoom
@@ -281,12 +231,16 @@ export default {
         height: `${height}px`
       }
     },
-    renderMainStyle () {
+    renderElementsStyle () {
+      const bgImageUrl = this.bgImageUrl ? `url(${this.bgImageUrl})` : ''
       return {
+        backgroundColor: `${this.bgColor}`,
+        backgroundImage: `${bgImageUrl}`,
+        backgroundRepeat: `${this.bgImageRepeat}`,
+        backgroundPosition: `${this.bgImageLeft} ${this.bgImageTop}`,
         width: `${this.innerWidth}px`,
         height: `${this.innerHeight}px`,
-        marginTop: `${this.innerHeight * -1}px`,
-        transformOrigin: '0 100%',
+        transformOrigin: '0 0',
         transform: `scale(${this.zoom})`
       }
     }
@@ -294,19 +248,15 @@ export default {
 }
 </script>
 <style lang="less">
-  .ui-board{
-    position: relative;
-    border: 1px solid #666;
+.ui-board{
+  position: relative;
+  .canvas-container{
+    z-index: 10;
   }
   .ui-board__elements{
-    overflow: hidden;
-    &:after{
-      content: '';
-      display: block;
-      clear: both;
-    }
-    .ui-board-page{
-      float: left;
-    }
+    position: absolute;
+    left: 0;
+    top: 0;
   }
+}
 </style>
