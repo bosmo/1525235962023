@@ -58,7 +58,7 @@ export default {
       top: this.top,
       width: this.width,
       height: this.height,
-      fill: 'rgba(255,0,0,0)',
+      fill: 'rgba(0,0,0,0)',
       angle: this.rotate,
       scaleX: this.scaleX,
       scaleY: this.scaleY
@@ -102,11 +102,10 @@ export default {
       let height = this.height * this.scaleY
       let left = this.left
       let top = this.top
-      console.log(this.width, this.scaleX)
       if (this.widget) {
         let {x, y} = this.widget.translateToGivenOrigin(this.widget.getCenterPoint(), 'center', 'center', 0, 0)
-        left = x
-        top = y
+        left = x + 0.5 * this.scaleX
+        top = y + 0.5 * this.scaleY
       }
       const data = {
         position: 'absolute',

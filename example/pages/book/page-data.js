@@ -1,6 +1,6 @@
 export default [{
   bgImageUrl: 'https://swiftbuckets-akmi.sf-cdn.com/v1/cmg/cell47/cdm/e9a9568f88094fde9b4eecb8ad147335/3',
-  bgColor: '#f00',
+  bgColor: '#f0',
   left: 0,
   top: 0,
   width: 600,
