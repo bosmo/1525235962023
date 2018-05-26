@@ -1,0 +1,36 @@
+.ui-board{
+  overflow: hidden;
+  position: relative;
+  .canvas-container{
+    z-index: 10;
+  }
+}
+.ui-board__elements{
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/**
+ * 相框
+*/
+.ui-board-frame{
+  border: 1px solid #A1A5A9;
+  box-sizing: border-box;
+  position: relative;
+  background: url("./images/board_empty_photo.svg") no-repeat 50% 50%;
+  background-size: 50%;
+  background-color: #7D8791;
+}
+
+/**
+ * 文本
+*/
+.ui-board-text{
+  display: table;
+}
+.ui-board-text__inner{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}

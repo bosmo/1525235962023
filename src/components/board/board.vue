@@ -248,16 +248,3 @@ export default {
   }
 }
 </script>
-<style lang="less">
-.ui-board{
-  position: relative;
-  .canvas-container{
-    z-index: 10;
-  }
-  .ui-board__elements{
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-}
-</style>

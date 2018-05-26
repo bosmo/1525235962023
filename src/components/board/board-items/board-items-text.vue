@@ -181,13 +181,3 @@ export default {
   }
 }
 </script>
-<style>
-.ui-board-text{
-  display: table;
-}
-.ui-board-text__inner{
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-}
-</style>

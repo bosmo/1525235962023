@@ -1,6 +1,6 @@
 <template>
-  <div class="ui-board-frame" :style="renderStyle()">
-    <img :src="imageUrl" style="max-height: 100%; max-width: 100%;" />
+  <div :class="['ui-board-frame', {'has-image': imageUrl}]" :style="renderStyle()">
+    <img v-if="imageUrl" style="max-height: 100%; max-width: 100%;" />
   </div>
 </template>
 <script>
@@ -123,10 +123,3 @@ export default {
   }
 }
 </script>
-<style lang="less">
-  .ui-board-frame{
-    background-color: #7D8791;
-    border: 1px solid #A1A5A9;
-    box-sizing: border-box;
-  }
-</style>
