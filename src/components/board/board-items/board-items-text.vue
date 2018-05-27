@@ -35,7 +35,11 @@ export default {
       type: Number,
       default: 0
     },
-    scale: {
+    scaleX: {
+      type: Number,
+      default: 1
+    },
+    scaleY: {
       type: Number,
       default: 1
     },
@@ -89,24 +93,6 @@ export default {
     }
   },
   inject: ['UiBoard'],
-  watch: {
-    fontSize (val) {
-      this.widget.set('fontSize', val)
-      this.UiBoard.refresh()
-    },
-    fontColor (val) {
-      this.widget.set('fill', val)
-      this.UiBoard.refresh()
-    },
-    fontWeight (val) {
-      this.widget.set('fontWeight', val)
-      this.UiBoard.refresh()
-    },
-    fontStyle (val) {
-      this.widget.set('fontStyle', val)
-      this.UiBoard.refresh()
-    }
-  },
   mounted () {
     this.widget = new fabric.Rect({
       id: this.id,
@@ -146,15 +132,16 @@ export default {
         rotate: this.widget.angle,
         left: this.widget.left,
         top: this.widget.top,
-        scale: this.widget.scaleX,
+        scaleX: this.widget.scaleX,
+        scaleY: this.widget.scaleY,
         width: this.widget.width,
         height: this.widget.height
       }
     },
     renderStyle () {
-      let width = this.width * this.scale
-      let height = this.height * this.scale
-      let fontSize = this.fontSize * this.scale
+      let width = this.width * this.scaleX
+      let height = this.height * this.scaleY
+      let fontSize = this.fontSize
       let left = this.left
       let top = this.top
       if (this.widget) {
@@ -162,8 +149,6 @@ export default {
         left = x
         top = y
       }
-      // left = left * this.scale
-      // top = top * this.scale
       const data = {
         position: 'absolute',
         left: `${left}px`,
@@ -171,6 +156,7 @@ export default {
         width: `${width}px`,
         height: `${height}px`,
         fontSize: `${fontSize}px`,
+        color: this.fontColor,
         transform: `rotate(${this.rotate}deg)`
       }
       return data

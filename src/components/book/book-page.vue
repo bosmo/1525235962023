@@ -15,6 +15,7 @@
     @dragleave="handleDragleave"
     @drop="handleDrop"
     @item-selected="handleItemSelected"
+    @item-deselect="handleItemDeselect"
     @item-scaling="handleItemChange('scaling', $event)"
     @item-moving="handleItemChange('moving', $event)"
     @item-rotating="handleItemChange('rotating', $event)"
@@ -77,6 +78,9 @@ export default {
         type,
         ...evt
       })
+    },
+    handleItemDeselect (evt) {
+      this.$emit('item-deselect', evt)
     },
     handleItemSelected (evt) {
       this.$emit('item-selected', evt)

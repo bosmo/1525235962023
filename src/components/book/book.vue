@@ -8,6 +8,8 @@
       :key="index"
       v-bind="page"
       :zoom="zoom"
+      @item-deselect="handlePageItemDeselect"
+      @item-selected="handlePageItemSelected"
       @item-change="handlePageItemChange"
     ></ui-book-page>
     <div class="ui-book__fakepages"></div>
@@ -47,8 +49,14 @@ export default {
         height: `${height}px`
       }
     },
+    handlePageItemSelected (evt) {
+      this.$emit('page-item-selected', evt)
+    },
+    handlePageItemDeselect (evt) {
+      this.$emit('page-item-deselect', evt)
+    },
     handlePageItemChange (evt) {
-      this.$emit('item-change', evt)
+      this.$emit('page-item-change', evt)
     }
   }
 }
