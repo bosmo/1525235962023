@@ -17,6 +17,10 @@ export default {
   props: {
     selector: {
       type: String
+    },
+    applyClone: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -43,15 +47,19 @@ export default {
       },
       onmove: (event) => {
         const taraget = event.target
-        if (!$cloneNode) {
-          const rect = taraget.getBoundingClientRect()
-          $cloneNode = taraget.cloneNode()
-          $cloneNode.innerHTML = taraget.innerHTML
-          $cloneNode.style.position = 'fixed'
-          $cloneNode.style.left = rect.x + 'px'
-          $cloneNode.style.top = rect.y + 'px'
-          $cloneNode.style.zIndex = 100
-          event.target.after($cloneNode)
+        if (this.applyClone) {
+          if (!$cloneNode) {
+            const rect = taraget.getBoundingClientRect()
+            $cloneNode = taraget.cloneNode()
+            $cloneNode.innerHTML = taraget.innerHTML
+            $cloneNode.style.position = 'fixed'
+            $cloneNode.style.left = rect.x + 'px'
+            $cloneNode.style.top = rect.y + 'px'
+            $cloneNode.style.zIndex = 100
+            event.target.after($cloneNode)
+          }
+        } else {
+          $cloneNode = taraget
         }
         let x = (parseFloat($cloneNode.style.left || 0)) + event.dx
         let y = (parseFloat($cloneNode.style.top || 0)) + event.dy
@@ -75,8 +83,10 @@ export default {
             target: event.target
           })
         }
-        $cloneNode.remove()
-        $cloneNode = null
+        if (this.applyClone) {
+          $cloneNode.remove()
+          $cloneNode = null
+        }
         this.$emit('end', event)
       }
     })

@@ -5,6 +5,7 @@ import Dialog from './components/dialog'
 import Board from './components/board'
 import Book from './components/book'
 import Draggable from './components/draggable'
+import AlignLine from './components/align-line'
 
 const components = {
   Form,
@@ -13,7 +14,8 @@ const components = {
   Dialog,
   Board,
   Book,
-  Draggable
+  Draggable,
+  AlignLine
 }
 
 const install = (Vue) => {
@@ -33,7 +35,8 @@ export {
   Dialog,
   Board,
   Book,
-  Draggable
+  Draggable,
+  AlignLine
 }
 
 export default {...components, install}
