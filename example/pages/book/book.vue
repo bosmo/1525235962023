@@ -9,7 +9,16 @@
       </ui-draggable>
     </div>
     <div class="page-book__inner" ref="testBoard">
-      <ui-book v-if="ready" :width="realWidth" :height="realHeight" :zoom="zoom" :data="pageData" @item-change="handlePageItemChange"></ui-book>
+      <ui-book
+        v-if="ready"
+        :width="realWidth"
+        :height="realHeight"
+        :zoom="zoom"
+        :pages="pageData"
+        :current-page-index="currentPageIndex"
+        @page-item-change="handlePageItemChange"
+        @page-index-changed="handlePageIndexChanged"
+      ></ui-book>
     </div>
   </div>
 </template>
@@ -26,7 +35,8 @@
         height: 0,
         zoom: 1,
         ready: false,
-        pageData
+        pageData,
+        currentPageIndex: 0
       }
     },
     mounted () {
@@ -63,6 +73,9 @@
         for (let i in data) {
           Vue.set(item, i, data[i])
         }
+      },
+      handlePageIndexChanged (evt) {
+        this.currentPageIndex = evt.pageIndex
       }
     },
     beforeDestroy () {

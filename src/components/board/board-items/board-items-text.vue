@@ -111,8 +111,7 @@ export default {
       this.$emit('scaling', this.getData())
     })
     this.widget.on('rotating', () => {
-      const { rotate } = this.getData()
-      this.$emit('rotating', { rotate })
+      this.$emit('rotating', this.getData())
     })
     this.widget.on('selected', () => {
       this.$emit('selected', this.getData())

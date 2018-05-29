@@ -1,5 +1,12 @@
 <template>
-  <div class="ui-board" :style="renderStyle()">
+  <ui-board-align-line
+    class="ui-board"
+    ref="alignLine"
+    :active="activeLine"
+    :style="renderStyle()"
+    :active-rect="selectedItemRect"
+    :reference-rects="referenceItemRects"
+  >
     <canvas class="ui-board__canvas" :id="id"></canvas>
     <div class="ui-board__elements" v-if="ready" :style="renderElementsStyle()">
       <component
@@ -23,16 +30,20 @@
         @deselect="handleItemDeselect(item)"
       ></component>
     </div>
-  </div>
+  </ui-board-align-line>
 </template>
 <script>
 import { v4 } from 'uuid'
 import { fabric } from 'fabric'
 import interact from 'interactjs'
 import boardItems from './board-items'
+import UiBoardAlignLine from './board-align-line'
 
 export default {
   name: 'UiBoard',
+  components: {
+    UiBoardAlignLine
+  },
   provide () {
     return {
       UiBoard: this
@@ -74,6 +85,8 @@ export default {
   data () {
     return {
       id: v4(),
+      activeLine: false,
+      selectedItem: null,
       ready: false
     }
   },
@@ -88,11 +101,45 @@ export default {
       this.setHeight(val)
     }
   },
+  computed: {
+    selectedItemRect () {
+      if (this.selectedItem) {
+        return {
+          width: this.selectedItem.width,
+          height: this.selectedItem.height,
+          left: this.selectedItem.left,
+          top: this.selectedItem.top,
+          right: this.selectedItem.width + this.selectedItem.left,
+          bottom: this.selectedItem.top + this.selectedItem.height
+        }
+      }
+    },
+    referenceItemRects () {
+      const result = []
+      if (this.selectedItem) {
+        this.items.forEach(v => {
+          if (v !== this.selectedItem) {
+            result.push({
+              width: v.width,
+              height: v.height,
+              left: v.left,
+              top: v.top,
+              right: v.width + v.left,
+              bottom: v.top + v.height
+            })
+          }
+        })
+      }
+      return result
+    }
+  },
   mounted () {
     this.canvas = new fabric.Canvas(this.id, {
       enableRetinaScaling: true,
       selection: false
     })
+    this.canvas.on('mouse:down', this.handleCanvasMouseDown)
+    this.canvas.on('mouse:up', this.handleCanvasMouseUp)
     this.interact = interact(this.$el).dropzone({
       ondropactivate: (event) => {
         this.$emit('dropactivate', event)
@@ -113,6 +160,12 @@ export default {
     this.ready = true
   },
   methods: {
+    handleCanvasMouseDown () {
+      this.$set(this, 'activeLine', true)
+    },
+    handleCanvasMouseUp () {
+      this.$set(this, 'activeLine', false)
+    },
     /**
      * 渲染动态新增的组件
     */
@@ -126,6 +179,7 @@ export default {
      * 移动画板组件触发
     */
     handleItemMoving (item, evt) {
+      this.$refs.alignLine.update()
       this.$emit('item-moving', {
         item,
         data: evt
@@ -135,6 +189,7 @@ export default {
      * 旋转画板组件触发
     */
     handleItemScaling (item, evt) {
+      this.$refs.alignLine.update()
       this.$emit('item-scaling', {
         item,
         data: evt
@@ -144,17 +199,22 @@ export default {
      * 缩放画板组件触发
     */
     handleItemRotating (item, evt) {
+      this.$refs.alignLine.update()
       this.$emit('item-rotating', {
         item,
         data: evt
       })
     },
     handleItemSelected (item) {
+      this.$set(this, 'selectedItem', item)
+      this.$refs.alignLine.update()
       this.$emit('item-selected', {
         item
       })
     },
     handleItemDeselect (item) {
+      this.$set(this, 'selectedItem', null)
+      this.$refs.alignLine.update()
       this.$emit('item-deselect', {
         item
       })
