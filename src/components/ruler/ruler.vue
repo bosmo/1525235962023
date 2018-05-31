@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ui-rule-base :width="width" :height="height" :workspaceWidth="workspaceWidth" :workspaceHeight="workspaceHeight"></ui-rule-base>
+    <ui-rule-base dir="y" :width="width" :height="height" :workspaceWidth="workspaceWidth" :workspaceHeight="workspaceHeight"></ui-rule-base>
   </div>
 </template>
 <script>
