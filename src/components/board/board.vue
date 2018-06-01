@@ -11,7 +11,7 @@
     <div class="ui-board__elements" v-if="ready" :style="renderElementsStyle()">
       <component
         v-for="item in items"
-        :ref="item.id"
+        :ref="`item-${item.id}`"
         :key="item.id"
         :id="item.id"
         :width="item.width"
@@ -102,35 +102,51 @@ export default {
     }
   },
   computed: {
-    selectedItemRect () {
-      if (this.selectedItem) {
-        return {
-          width: this.selectedItem.width,
-          height: this.selectedItem.height,
-          left: this.selectedItem.left,
-          top: this.selectedItem.top,
-          right: this.selectedItem.width + this.selectedItem.left,
-          bottom: this.selectedItem.top + this.selectedItem.height
+    selectedItemRect: {
+      cache: false,
+      get () {
+        if (this.selectedItem) {
+          let $selectedItem = this.$refs[`item-${this.selectedItem.id}`]
+          if ($selectedItem && $selectedItem[0]) {
+            $selectedItem = $selectedItem[0]
+            const {width, height, left, top} = $selectedItem.widget.getBoundingRect(true, true)
+            return {
+              width,
+              height,
+              left,
+              top,
+              right: width + left,
+              bottom: top + height
+            }
+          }
         }
       }
     },
-    referenceItemRects () {
-      const result = []
-      if (this.selectedItem) {
-        this.items.forEach(v => {
-          if (v !== this.selectedItem) {
-            result.push({
-              width: v.width,
-              height: v.height,
-              left: v.left,
-              top: v.top,
-              right: v.width + v.left,
-              bottom: v.top + v.height
-            })
-          }
-        })
+    referenceItemRects: {
+      cache: false,
+      get () {
+        const result = []
+        if (this.selectedItem) {
+          this.items.forEach(v => {
+            if (v !== this.selectedItem) {
+              let $item = this.$refs[`item-${v.id}`]
+              if ($item && $item[0]) {
+                $item = $item[0]
+                const {width, height, left, top} = $item.widget.getBoundingRect(true, true)
+                result.push({
+                  width,
+                  height,
+                  left: left,
+                  top: top,
+                  right: width + left,
+                  bottom: top + height
+                })
+              }
+            }
+          })
+        }
+        return result
       }
-      return result
     }
   },
   mounted () {

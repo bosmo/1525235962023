@@ -43,7 +43,7 @@ export default [{
   height: 300,
   items: [{
     'type': 'text',
-    'id': 'aaa',
+    'id': 'ccc',
     'width': 50,
     'height': 33.89999999999999,
     'left': 0,
@@ -61,7 +61,7 @@ export default [{
     }
   }, {
     'type': 'frame',
-    'id': 'bbb',
+    'id': 'ddd',
     'width': 50,
     'height': 100,
     'left': 100,
@@ -79,7 +79,7 @@ export default [{
   height: 300,
   items: [{
     'type': 'text',
-    'id': 'aaa',
+    'id': 'eee',
     'width': 50,
     'height': 33.89999999999999,
     'left': 0,
@@ -97,7 +97,7 @@ export default [{
     }
   }, {
     'type': 'frame',
-    'id': 'bbb',
+    'id': 'fff',
     'width': 50,
     'height': 100,
     'left': 100,
@@ -115,7 +115,7 @@ export default [{
   height: 300,
   items: [{
     'type': 'text',
-    'id': 'aaa',
+    'id': 'ggg',
     'width': 50,
     'height': 33.89999999999999,
     'left': 0,
@@ -133,7 +133,7 @@ export default [{
     }
   }, {
     'type': 'frame',
-    'id': 'bbb',
+    'id': 'hhh',
     'width': 50,
     'height': 100,
     'left': 100,
@@ -151,7 +151,7 @@ export default [{
   height: 300,
   items: [{
     'type': 'text',
-    'id': 'aaa',
+    'id': 'iii',
     'width': 50,
     'height': 33.89999999999999,
     'left': 0,
@@ -169,7 +169,7 @@ export default [{
     }
   }, {
     'type': 'frame',
-    'id': 'bbb',
+    'id': 'jjj',
     'width': 50,
     'height': 100,
     'left': 100,
