@@ -48,7 +48,7 @@ export default {
   background: -moz-repeating-linear-gradient(to right, #aaa, #aaa 1px, #fff 1px, #fff 2px);
   background: repeating-linear-gradient(to right, #aaa, #aaa 1px, #fff 1px, #fff 2px);
   width: 8px;
-  height: calc(100% - 4px);
+  height: calc(~'100% - 4px');
   position: absolute;
   top: -1px;
   z-index: 3;
@@ -62,7 +62,7 @@ export default {
   background: -moz-repeating-linear-gradient(to right, #aaa, #aaa 1px, #fff 1px, #fff 2px);
   background: repeating-linear-gradient(to right, #aaa, #aaa 1px, #fff 1px, #fff 2px);
   width: 8px;
-  height: calc(100% - 4px);
+  height: calc(~'100% - 4px');
   position: absolute;
   top: -1px;
   z-index: 3;
@@ -73,7 +73,7 @@ export default {
   background: -moz-linear-gradient(to bottom, #aaa, #aaa 50%, #fff 50%, #fff);
   background: linear-gradient(to bottom, #aaaaaa,#aaaaaa 50%,#ffffff 50%,#ffffff);
   background-size: 100% 2px;
-  width: calc(100% - 16px);
+  width: calc(~'100% - 16px');
   position: absolute;
   bottom: 5px;
   height: 6px;
@@ -85,7 +85,7 @@ export default {
   position: absolute;
   overflow: hidden;
   width: 40px;
-  height: calc(100% - 5px);
+  height: calc(~'100% - 5px');
   top: -4px;
   left: auto;
   right: 0px;
@@ -97,7 +97,7 @@ export default {
   background-image: -ms-linear-gradient(left, rgba(0,0,0,0), #000);
   background-image: -moz-linear-gradient(left, rgba(0,0,0,0), #000);
   background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), #000);
-  left: calc(50% - 40px)
+  left: calc(~'50% - 40px')
 }
 .ui-book-shell__embossright{
   background-image: -o-linear-gradient(right, rgba(0,0,0,0), #000);
@@ -133,7 +133,7 @@ export default {
   width: 2px;
   position: absolute;
   left: 0;
-  height: calc(100% - 7px);
+  height: calc(~'100% - 7px');
   right: 0;
   bottom: 0;
   top: -14px;
