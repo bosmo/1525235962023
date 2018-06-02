@@ -1,36 +1,33 @@
 <template>
   <div :class="['ui-book-shell', `ui-book-shell--${type}`]">
-    <div class="ui-book-shell__inner">
-      <div class="ui-book-shell__main">
-        <slot></slot>
-      </div>
-      <template v-if="type === 'page'">
-        <div class="ui-book-shell__fakeleft"></div>
-        <div class="ui-book-shell__fakeright"></div>
-        <div class="ui-book-shell__fakebottom"></div>
-        <div class="ui-book-shell__embossleft"></div>
-        <div class="ui-book-shell__embossright"></div>
-        <div class="ui-book-shell__spinetop"></div>
-        <div class="ui-book-shell__spinebottom"></div>
-        <div class="ui-book-shell__divider"></div>
-      </template>
-      <template v-else-if="type === 'cover'">
-        <div class="ui-book-shell__fakecover"></div>
-        <div class="ui-book-shell__fakeright"></div>
-        <div class="ui-book-shell__fakebottom"></div>
-        <div class="ui-book-shell__fakeridge"></div>
-      </template>
-      <template v-else-if="type === 'backcover'">
-        <div class="ui-book-shell__backcover"></div>
-        <div class="ui-book-shell__fakeleft"></div>
-        <div class="ui-book-shell__fakebottom"></div>
-        <div class="ui-book-shell__fakeridge"></div>
-      </template>
+    <div class="ui-book-shell__main">
+      <slot></slot>
     </div>
+    <template v-if="type === 'page'">
+      <div class="ui-book-shell__fakeleft"></div>
+      <div class="ui-book-shell__fakeright"></div>
+      <div class="ui-book-shell__fakebottom"></div>
+      <div class="ui-book-shell__spinetop"></div>
+      <div class="ui-book-shell__spinebottom"></div>
+      <div class="ui-book-shell__divider"></div>
+    </template>
+    <template v-else-if="type === 'cover'">
+      <div class="ui-book-shell__fakecover"></div>
+      <div class="ui-book-shell__fakeright"></div>
+      <div class="ui-book-shell__fakebottom"></div>
+      <div class="ui-book-shell__fakeridge"></div>
+    </template>
+    <template v-else-if="type === 'backcover'">
+      <div class="ui-book-shell__backcover"></div>
+      <div class="ui-book-shell__fakeleft"></div>
+      <div class="ui-book-shell__fakebottom"></div>
+      <div class="ui-book-shell__fakeridge"></div>
+    </template>
     <template v-if="type === 'page'">
       <div class="ui-book-shell__shadowleft"></div>
       <div class="ui-book-shell__shadowright"></div>
     </template>
+    <div class="ui-book-shell__bg"></div>
   </div>
 </template>
 <script>
@@ -45,18 +42,27 @@ export default {
 .ui-book-shell{
   display: inline-block;
   position: relative;
+  padding: 0px 16px 6px 16px;
 }
 .ui-book-shell__inner{
   display: inline-block;
-  padding: 0px 16px 5px 16px;
-  background-color: #31383b;
-  box-shadow: #666 0px 0px 10px;
   position: relative;
   z-index: 2;
 }
+.ui-book-shell__bg{
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: #31383b;
+  box-shadow: #666 0px 0px 10px;
+}
 .ui-book-shell__main{
   display: inline-block;
-  margin-top: -4px;
+  margin: -4px 0 0;
+  position: relative;
+  z-index: 30;
 }
 .ui-book-shell__fakeleft{
   left: 8px;
@@ -99,36 +105,10 @@ export default {
   left: 8px;
   z-index: 1
 }
-.ui-book-shell__embossleft,
-.ui-book-shell__embossright{
-  position: absolute;
-  overflow: hidden;
-  width: 40px;
-  height: calc(~'100% - 5px');
-  top: -4px;
-  left: auto;
-  right: 0px;
-  opacity: 0.3;
-  z-index: 2
-}
-.ui-book-shell__embossleft{
-  background-image: -o-linear-gradient(left, rgba(0,0,0,0), #000);
-  background-image: -ms-linear-gradient(left, rgba(0,0,0,0), #000);
-  background-image: -moz-linear-gradient(left, rgba(0,0,0,0), #000);
-  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), #000);
-  left: calc(~'50% - 40px')
-}
-.ui-book-shell__embossright{
-  background-image: -o-linear-gradient(right, rgba(0,0,0,0), #000);
-  background-image: -ms-linear-gradient(right, rgba(0,0,0,0), #000);
-  background-image: -moz-linear-gradient(right, rgba(0,0,0,0), #000);
-  background-image: -webkit-linear-gradient(right, rgba(0,0,0,0), #000);
-  left: 50%
-}
 .ui-book-shell__spinetop{
   position: absolute;
   left: 50%;
-  bottom: -1px;
+  bottom: 1px;
   z-index: 5;
   background: #31383b;
   width: 14px;
@@ -191,27 +171,51 @@ export default {
 }
 
 .ui-book-shell--cover{
-  .ui-book-shell__inner{
-    padding-right: 14px;
-    padding-left: 14px;
-  }
+  padding-right: 14px;
+  padding-left: 0;
   .ui-book-shell__main{
     margin-top: -6px;
+  }
+  .ui-book-shell__fakebottom{
+    width: calc(100% - 18px);
+    left: 12px;
   }
   .ui-book-shell__fakeright{
     right: 6px;
   }
   .ui-book-shell__fakeridge{
-    left: 31px;
+    left: 6px;
     transform: rotate(36deg);
+  }
+  .ui-book-shell__bg{
+    left: 11px;
+  }
+  .ui-board .ui-board__elements{
+    &:before{
+      content: '';
+      position: absolute;
+      overflow: hidden;
+      width: 30px;
+      height: 100%;
+      top: 0;
+      left: auto;
+      right: 0px;
+      opacity: 0.3;
+      z-index: 2;
+    }
+    &:before{
+      background-image: -o-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -ms-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -moz-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -webkit-linear-gradient(right, rgba(0,0,0,0), #000);
+      left: 0;
+    }
   }
 }
 
 .ui-book-shell--backcover{
-  .ui-book-shell__inner{
-    padding-right: 14px;
-    padding-left: 14px;
-  }
+  padding-right: 0;
+  padding-left: 14px;
   .ui-book-shell__main{
     margin-top: -6px;
   }
@@ -219,18 +223,77 @@ export default {
     left: 6px;
   }
   .ui-book-shell__fakeridge{
-    right: 31px;
+    right: 6px;
     transform: rotate(-35deg);
+  }
+  .ui-book-shell__fakebottom{
+    width: calc(100% - 18px);
+    left: 6px;
+  }
+  .ui-book-shell__bg{
+    right: 11px;
+  }
+  .ui-board .ui-board__elements{
+    &:after{
+      content: '';
+      position: absolute;
+      overflow: hidden;
+      width: 30px;
+      height: 100%;
+      top: 0;
+      left: auto;
+      right: 0px;
+      opacity: 0.3;
+      z-index: 2;
+    }
+    &:after{
+      background-image: -o-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -ms-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -moz-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), #000);
+      left: calc(~'100% - 30px');
+    }
+  }
+}
+
+.ui-book-shell--page {
+  .ui-board .ui-board__elements{
+    &:after,&:before{
+      content: '';
+      position: absolute;
+      overflow: hidden;
+      width: 30px;
+      height: 100%;
+      top: 0;
+      left: auto;
+      right: 0px;
+      opacity: 0.3;
+      z-index: 2;
+    }
+    &:before{
+      background-image: -o-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -ms-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -moz-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), #000);
+      left: calc(~'50% - 30px')
+    }
+    &:after{
+      background-image: -o-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -ms-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -moz-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -webkit-linear-gradient(right, rgba(0,0,0,0), #000);
+      left: 50%
+    }
   }
 }
 
 .ui-book-shell__fakecover{
   background-color: #fff;
   position: absolute;
-  left: -12px;
+  left: -2px;
   top: -8px;
-  width: 100%;
-  height: 100%;
+  width: calc(~'100% - 10px');
+  height: calc(~'100% - 1px');
   box-sizing: border-box;
   border: 2px solid #31383b;
   z-index: 10;
@@ -239,18 +302,18 @@ export default {
 .ui-book-shell__backcover{
   background-color: #fff;
   position: absolute;
-  right: -12px;
+  right: -2px;
   top: -8px;
-  width: 100%;
-  height: 100%;
+  width: calc(~'100% - 10px');
+  height: calc(~'100% - 1px');
   box-sizing: border-box;
   border: 2px solid #31383b;
   z-index: 10;
 }
 
 .ui-book-shell__fakeridge{
-  height: 50%;
-  bottom: -10px;
+  height: 30px;
+  bottom: 2px;
   width: 15px;
   background-color: #31383b;
   position: absolute;
