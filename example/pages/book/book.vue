@@ -29,8 +29,8 @@
     name: 'PageBookDesigner',
     data () {
       return {
-        realWidth: 600,
-        realHeight: 300,
+        realWidth: 1840,
+        realHeight: 600,
         width: 0,
         height: 0,
         zoom: 1,

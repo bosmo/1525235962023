@@ -42,7 +42,8 @@ export default {
 .ui-book-shell{
   display: inline-block;
   position: relative;
-  padding: 0px 16px 6px 16px;
+  padding: 0px 16px 12px 16px;
+  line-height: 0;
 }
 .ui-book-shell__inner{
   display: inline-block;
@@ -73,7 +74,7 @@ export default {
   background: -moz-repeating-linear-gradient(to right, #aaa, #aaa 1px, #fff 1px, #fff 2px);
   background: repeating-linear-gradient(to right, #aaa, #aaa 1px, #fff 1px, #fff 2px);
   width: 8px;
-  height: calc(~'100% - 4px');
+  height: calc(~'100% - 5px');
   position: absolute;
   top: -1px;
   z-index: 3;
@@ -87,7 +88,7 @@ export default {
   background: -moz-repeating-linear-gradient(to right, #aaa, #aaa 1px, #fff 1px, #fff 2px);
   background: repeating-linear-gradient(to right, #aaa, #aaa 1px, #fff 1px, #fff 2px);
   width: 8px;
-  height: calc(~'100% - 4px');
+  height: calc(~'100% - 5px');
   position: absolute;
   top: -1px;
   z-index: 3;
@@ -100,7 +101,7 @@ export default {
   background-size: 100% 2px;
   width: calc(~'100% - 16px');
   position: absolute;
-  bottom: 5px;
+  bottom: 6px;
   height: 6px;
   left: 8px;
   z-index: 1
@@ -177,15 +178,16 @@ export default {
     margin-top: -6px;
   }
   .ui-book-shell__fakebottom{
-    width: calc(100% - 18px);
+    width: calc(~'100% - 18px');
     left: 12px;
   }
   .ui-book-shell__fakeright{
     right: 6px;
   }
   .ui-book-shell__fakeridge{
+    width: 16px;
     left: 6px;
-    transform: rotate(36deg);
+    transform: rotate(40deg);
   }
   .ui-book-shell__bg{
     left: 11px;
@@ -223,11 +225,12 @@ export default {
     left: 6px;
   }
   .ui-book-shell__fakeridge{
+    width: 16px;
     right: 6px;
-    transform: rotate(-35deg);
+    transform: rotate(-40deg);
   }
   .ui-book-shell__fakebottom{
-    width: calc(100% - 18px);
+    width: calc(~'100% - 18px');
     left: 6px;
   }
   .ui-book-shell__bg{
@@ -238,7 +241,7 @@ export default {
       content: '';
       position: absolute;
       overflow: hidden;
-      width: 30px;
+      width: 40px;
       height: 100%;
       top: 0;
       left: auto;
@@ -251,7 +254,7 @@ export default {
       background-image: -ms-linear-gradient(left, rgba(0,0,0,0), #000);
       background-image: -moz-linear-gradient(left, rgba(0,0,0,0), #000);
       background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), #000);
-      left: calc(~'100% - 30px');
+      left: calc(~'100% - 40px');
     }
   }
 }
@@ -262,7 +265,7 @@ export default {
       content: '';
       position: absolute;
       overflow: hidden;
-      width: 30px;
+      width: 40px;
       height: 100%;
       top: 0;
       left: auto;
@@ -275,7 +278,7 @@ export default {
       background-image: -ms-linear-gradient(left, rgba(0,0,0,0), #000);
       background-image: -moz-linear-gradient(left, rgba(0,0,0,0), #000);
       background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), #000);
-      left: calc(~'50% - 30px')
+      left: calc(~'50% - 40px')
     }
     &:after{
       background-image: -o-linear-gradient(right, rgba(0,0,0,0), #000);
@@ -292,9 +295,8 @@ export default {
   position: absolute;
   left: -2px;
   top: -8px;
-  width: calc(~'100% - 10px');
-  height: calc(~'100% - 1px');
-  box-sizing: border-box;
+  width: calc(~'100% - 14px');
+  height: calc(~'100% - 6px');
   border: 2px solid #31383b;
   z-index: 10;
 }
@@ -304,9 +306,8 @@ export default {
   position: absolute;
   right: -2px;
   top: -8px;
-  width: calc(~'100% - 10px');
-  height: calc(~'100% - 1px');
-  box-sizing: border-box;
+  width: calc(~'100% - 14px');
+  height: calc(~'100% - 6px');
   border: 2px solid #31383b;
   z-index: 10;
 }
