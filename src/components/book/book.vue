@@ -1,6 +1,8 @@
 <template>
   <div class="ui-book">
-    <ui-book-shell>
+    <ui-book-shell
+      :type="currentPage.type"
+    >
       <ui-book-page
         v-bind="currentPage"
         :zoom="zoom"

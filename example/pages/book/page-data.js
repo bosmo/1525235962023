@@ -1,5 +1,6 @@
 export default [{
   title: '封面',
+  type: 'cover',
   bgColor: '#fff',
   left: 0,
   top: 0,
@@ -36,6 +37,7 @@ export default [{
   }]
 }, {
   title: '1~2页',
+  type: 'page',
   bgColor: '#fff',
   left: 0,
   top: 0,
@@ -72,6 +74,7 @@ export default [{
   }]
 }, {
   title: '3~4页',
+  type: 'page',
   bgColor: '#fff',
   left: 0,
   top: 0,
@@ -108,6 +111,7 @@ export default [{
   }]
 }, {
   title: '5~6页',
+  type: 'page',
   bgColor: '#fff',
   left: 0,
   top: 0,
@@ -144,6 +148,7 @@ export default [{
   }]
 }, {
   title: '封底',
+  type: 'backcover',
   bgColor: '#fff',
   left: 0,
   top: 0,

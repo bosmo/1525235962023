@@ -1,25 +1,44 @@
 <template>
-  <div class="ui-book-shell">
+  <div :class="['ui-book-shell', `ui-book-shell--${type}`]">
     <div class="ui-book-shell__inner">
       <div class="ui-book-shell__main">
         <slot></slot>
       </div>
-      <div class="ui-book-shell__fakeleft"></div>
-      <div class="ui-book-shell__fakeright"></div>
-      <div class="ui-book-shell__fakebottom"></div>
-      <div class="ui-book-shell__embossleft"></div>
-      <div class="ui-book-shell__embossright"></div>
-      <div class="ui-book-shell__spinetop"></div>
-      <div class="ui-book-shell__spinebottom"></div>
-      <div class="ui-book-shell__divider"></div>
+      <template v-if="type === 'page'">
+        <div class="ui-book-shell__fakeleft"></div>
+        <div class="ui-book-shell__fakeright"></div>
+        <div class="ui-book-shell__fakebottom"></div>
+        <div class="ui-book-shell__embossleft"></div>
+        <div class="ui-book-shell__embossright"></div>
+        <div class="ui-book-shell__spinetop"></div>
+        <div class="ui-book-shell__spinebottom"></div>
+        <div class="ui-book-shell__divider"></div>
+      </template>
+      <template v-else-if="type === 'cover'">
+        <div class="ui-book-shell__fakecover"></div>
+        <div class="ui-book-shell__fakeright"></div>
+        <div class="ui-book-shell__fakebottom"></div>
+        <div class="ui-book-shell__fakeridge"></div>
+      </template>
+      <template v-else-if="type === 'backcover'">
+        <div class="ui-book-shell__backcover"></div>
+        <div class="ui-book-shell__fakeleft"></div>
+        <div class="ui-book-shell__fakebottom"></div>
+        <div class="ui-book-shell__fakeridge"></div>
+      </template>
     </div>
-    <div class="ui-book-shell__shadowleft"></div>
-    <div class="ui-book-shell__shadowright"></div>
+    <template v-if="type === 'page'">
+      <div class="ui-book-shell__shadowleft"></div>
+      <div class="ui-book-shell__shadowright"></div>
+    </template>
   </div>
 </template>
 <script>
 export default {
-  name: 'UiBookShell'
+  name: 'UiBookShell',
+  props: {
+    type: String
+  }
 }
 </script>
 <style lang="less">
@@ -170,4 +189,71 @@ export default {
   right: 10px;
   left: auto
 }
+
+.ui-book-shell--cover{
+  .ui-book-shell__inner{
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+  .ui-book-shell__main{
+    margin-top: -6px;
+  }
+  .ui-book-shell__fakeright{
+    right: 6px;
+  }
+  .ui-book-shell__fakeridge{
+    left: 31px;
+    transform: rotate(36deg);
+  }
+}
+
+.ui-book-shell--backcover{
+  .ui-book-shell__inner{
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+  .ui-book-shell__main{
+    margin-top: -6px;
+  }
+  .ui-book-shell__fakeleft{
+    left: 6px;
+  }
+  .ui-book-shell__fakeridge{
+    right: 31px;
+    transform: rotate(-35deg);
+  }
+}
+
+.ui-book-shell__fakecover{
+  background-color: #fff;
+  position: absolute;
+  left: -12px;
+  top: -8px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 2px solid #31383b;
+  z-index: 10;
+}
+
+.ui-book-shell__backcover{
+  background-color: #fff;
+  position: absolute;
+  right: -12px;
+  top: -8px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 2px solid #31383b;
+  z-index: 10;
+}
+
+.ui-book-shell__fakeridge{
+  height: 50%;
+  bottom: -10px;
+  width: 15px;
+  background-color: #31383b;
+  position: absolute;
+}
+
 </style>

@@ -56,3 +56,8 @@ export default {
   }
 }
 </script>
+<style lang="less">
+  .ui-book-page-select{
+    display: block;
+  }
+</style>
