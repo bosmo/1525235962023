@@ -4,6 +4,7 @@
     ref="dialog"
     v-bind="$props"
     :visible.sync="visible"
+    :append-to-body="true"
     :close-on-press-escape="false"
     :close-on-click-modal="false"
     :before-close="handleBeforeClose"

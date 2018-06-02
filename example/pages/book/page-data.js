@@ -36,7 +36,7 @@ export default [{
     'rotate': 0
   }]
 }, {
-  title: '1~2页',
+  title: '第1~2页',
   type: 'page',
   bgColor: '#fff',
   left: 0,
@@ -73,7 +73,7 @@ export default [{
     'rotate': 0
   }]
 }, {
-  title: '3~4页',
+  title: '第3~4页',
   type: 'page',
   bgColor: '#fff',
   left: 0,
@@ -110,7 +110,7 @@ export default [{
     'rotate': 0
   }]
 }, {
-  title: '5~6页',
+  title: '第5~6页',
   type: 'page',
   bgColor: '#fff',
   left: 0,

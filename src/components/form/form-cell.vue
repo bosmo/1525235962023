@@ -23,3 +23,15 @@ export default {
   inject: ['elForm']
 }
 </script>
+<style lang="less">
+.ui-form-cell{
+  display: table-cell;
+  padding: 0 2%;
+  &:first-child{
+    padding-left: 4%;
+  }
+  &:last-child{
+    padding-right: 4%;
+  }
+}
+</style>

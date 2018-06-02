@@ -123,3 +123,13 @@ export default {
   }
 }
 </script>
+<style lang="less">
+.ui-board-frame{
+  border: 1px solid #A1A5A9;
+  box-sizing: border-box;
+  position: relative;
+  background: url("./board-items-frame__empty-photo.svg") no-repeat 50% 50%;
+  background-size: 50%;
+  background-color: #7D8791;
+}
+</style>
