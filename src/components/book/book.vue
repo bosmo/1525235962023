@@ -1,15 +1,14 @@
 <template>
-  <div
-    :class="['ui-book']"
-    :style="renderStyle()"
-  >
-    <ui-book-page
-      v-bind="currentPage"
-      :zoom="zoom"
-      @item-deselect="handlePageItemDeselect"
-      @item-selected="handlePageItemSelected"
-      @item-change="handlePageItemChange"
-    ></ui-book-page>
+  <div class="ui-book">
+    <ui-book-shell>
+      <ui-book-page
+        v-bind="currentPage"
+        :zoom="zoom"
+        @item-deselect="handlePageItemDeselect"
+        @item-selected="handlePageItemSelected"
+        @item-change="handlePageItemChange"
+      ></ui-book-page>
+    </ui-book-shell>
     <ui-book-page-select
       :value="currentPageIndex"
       :items="selectPageData"
@@ -18,12 +17,14 @@
   </div>
 </template>
 <script>
+import UiBookShell from './book-shell'
 import UiBookPage from './book-page'
 import UiBookPageSelect from './book-page-select'
 
 export default {
   name: 'UiBook',
   components: {
+    UiBookShell,
     UiBookPageSelect,
     UiBookPage
   },
@@ -68,14 +69,6 @@ export default {
     }
   },
   methods: {
-    renderStyle () {
-      const width = this.width * this.zoom
-      const height = this.height * this.zoom
-      return {
-        width: `${width}px`,
-        height: `${height}px`
-      }
-    },
     handlePageChanged ({item}) {
       this.$emit('page-index-changed', {
         pageIndex: item.value
@@ -93,3 +86,8 @@ export default {
   }
 }
 </script>
+<style lang="less">
+.ui-book{
+  display: inline-block;
+}
+</style>

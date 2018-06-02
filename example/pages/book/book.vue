@@ -36,7 +36,7 @@
         zoom: 1,
         ready: false,
         pageData,
-        currentPageIndex: 0
+        currentPageIndex: 1
       }
     },
     mounted () {
