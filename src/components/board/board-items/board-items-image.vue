@@ -1,6 +1,6 @@
 <template>
   <div :class="['ui-board-image', {'has-image': url}]" :style="renderStyle()">
-    <img v-if="url" :src="url" style="max-height: 100%; max-width: 100%;" />
+    <img v-if="url" :src="url" style="height: 100%; width: 100%;" />
   </div>
 </template>
 <script>
