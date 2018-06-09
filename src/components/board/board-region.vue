@@ -32,31 +32,39 @@ export default {
       type: String
     },
     bgImageRepeat: {
-      type: String
+      type: String,
+      default: 'no-repeat'
     },
     bgImageLeft: {
-      type: [String, Number]
+      type: [String, Number],
+      default: 0
     },
     bgImageTop: {
-      type: [String, Number]
+      type: [String, Number],
+      default: 0
     },
     bgColor: {
-      type: String
+      type: String,
+      default: '#fff'
     },
     type: {
       type: String
     },
     width: {
-      type: Number
+      type: Number,
+      default: 0
     },
     height: {
-      type: Number
+      type: Number,
+      default: 0
     },
     left: {
-      type: Number
+      type: Number,
+      default: 0
     },
     top: {
-      type: Number
+      type: Number,
+      default: 0
     },
     items: {
       type: Array,
@@ -88,13 +96,17 @@ export default {
   },
   methods: {
     renderStyle () {
-      const { left, top, width, height, bgColor } = this.$props
+      const { left, top, width, height, bgColor, bgImageUrl, bgImageLeft, bgImageTop, bgImageRepeat } = this.$props
       return {
         width: `${width}px`,
         height: `${height}px`,
         left: `${left}px`,
         top: `${top}px`,
-        backgroundColor: `${bgColor}`
+        backgroundColor: `${bgColor}`,
+        backgroundImage: `url(${bgImageUrl})`,
+        backgroundPosition: `${bgImageLeft} ${bgImageTop}`,
+        backgroundRepeat: `${bgImageRepeat}`,
+        backgroundSize: 'cover'
       }
     },
     /**
