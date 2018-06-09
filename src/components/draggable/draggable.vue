@@ -80,7 +80,8 @@ export default {
           this.$emit('drop', {
             realRect,
             dropRect,
-            target: event.target
+            target: event.dropzone.target,
+            handle: event.target
           })
         }
         if (this.applyClone) {

@@ -74,23 +74,22 @@ export default {
     }
   },
   methods: {
-    handlePageChange (item) {
-      console.log(item)
+    handlePageChange ({value}) {
       this.$emit('changed', {
-        item
+        value
       })
       this.$refs.popover.doClose()
     },
     handlePrevClick () {
       const index = Math.max(0, this.currentItemIndex - 1)
       this.$emit('changed', {
-        item: this.items[index]
+        value: this.items[index]['value']
       })
     },
     handleNextClick () {
       const index = Math.min(this.items.length - 1, this.currentItemIndex + 1)
       this.$emit('changed', {
-        item: this.items[index]
+        value: this.items[index]['value']
       })
     }
   }

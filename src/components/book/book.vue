@@ -1,89 +1,127 @@
 <template>
   <div class="ui-book">
-    <ui-book-shell
-      :type="currentPage.type"
-    >
-      <ui-book-page
-        v-bind="currentPage"
-        :zoom="zoom"
-        @item-deselect="handlePageItemDeselect"
-        @item-selected="handlePageItemSelected"
-        @item-change="handlePageItemChange"
-      ></ui-book-page>
-    </ui-book-shell>
+    <ui-board
+      :items="currentPage"
+      :width="boardWidth"
+      :height="boardHeight"
+      :zoom="zoom"
+      @item-selected="handleItemSelected"
+      @item-deselect="handleItemDeselect"
+      @item-scaling="handleItemChange('scaling', $event)"
+      @item-moving="handleItemChange('moving', $event)"
+      @item-rotating="handleItemChange('rotating', $event)"
+    ></ui-board>
     <ui-book-page-select
-      :value="currentPageIndex"
+      :value="pageIndex"
       :items="selectPageData"
-      @changed="handlePageChanged"
+      @changed="handlePageIndexChanged"
     ></ui-book-page-select>
   </div>
 </template>
 <script>
-import UiBookShell from './book-shell'
-import UiBookPage from './book-page'
+import _ from 'lodash'
+import UiBoard from '../board'
 import UiBookPageSelect from './book-page-select'
 
 export default {
   name: 'UiBook',
   components: {
-    UiBookShell,
-    UiBookPageSelect,
-    UiBookPage
+    UiBoard,
+    UiBookPageSelect
   },
   props: {
-    width: {
-      type: Number
-    },
-    height: {
-      type: Number
-    },
     zoom: {
       type: Number
     },
-    pages: {
+    data: {
       type: Array,
       default: () => {
         return []
       }
     },
-    currentPageIndex: {
+    pageIndex: {
       type: Number,
       default: 0
     }
   },
   computed: {
-    selectPageData () {
-      const result = []
-      if (this.pages) {
-        this.pages.forEach((v, i) => {
-          result.push({
-            text: v.title,
-            value: i
-          })
-        })
-      }
-      return result
+    pagesData () {
+      let data1 = []
+      let data2 = []
+      let data3 = {}
+      _.each(this.data, v => {
+        if (v.type === 'cover' || v.type === 'backCover' || v.type === 'backbone') {
+          data1.push(v)
+        } else {
+          if (v.type === 'insideCover' || v.type === 'insideBackCover') {
+            data3[v.type] = v
+          }
+          data2.push(v)
+        }
+      })
+      data2 = _.chunk(data2, 2)
+      _.each(data2, v => {
+        const hasInsideCover = _.find(v, {type: 'insideCover'})
+        const hasInsideBackCover = _.find(v, {type: 'insideBackCover'})
+        if (!hasInsideCover) {
+          v.unshift(data3['insideCover'])
+        }
+        if (!hasInsideBackCover) {
+          v.unshift(data3['insideBackCover'])
+        }
+      })
+      return _.concat([], [data1], data2)
     },
     currentPage () {
-      if (this.pages) {
-        return this.pages[this.currentPageIndex]
-      }
+      return this.pagesData[this.pageIndex]
+    },
+    boardHeight () {
+      let result = 0
+      _.each(this.currentPage, v => {
+        if (v.height > result) {
+          result = v.height
+        }
+      })
+      return result
+    },
+    boardWidth () {
+      let result = 0
+      _.each(this.currentPage, v => {
+        if (_.includes(['cover', 'backCover', 'backbone', 'insideCover', 'insideBackCover'], v.type)) {
+          result += v.width
+        }
+      })
+      return result
+    },
+    selectPageData () {
+      return _.map(this.pagesData, (v1, i1) => {
+        const titles = _.map(v1, v2 => {
+          return v2.title
+        })
+        return {
+          value: i1,
+          text: titles.join('~')
+        }
+      })
     }
   },
   methods: {
-    handlePageChanged ({item}) {
+    handlePageIndexChanged ({value}) {
       this.$emit('page-index-changed', {
-        pageIndex: item.value
+        pageIndex: value
       })
     },
-    handlePageItemSelected (evt) {
+    handleItemSelected (evt) {
       this.$emit('page-item-selected', evt)
     },
-    handlePageItemDeselect (evt) {
+    handleItemDeselect (evt) {
       this.$emit('page-item-deselect', evt)
     },
-    handlePageItemChange (evt) {
-      this.$emit('page-item-change', evt)
+    handleItemChange (type, evt) {
+      this.$emit('page-item-change', {
+        type,
+        ...evt
+      })
     }
   }
 }
@@ -91,5 +129,23 @@ export default {
 <style lang="less">
 .ui-book{
   display: inline-block;
+  .ui-board{
+    box-shadow: 0 0 12px rgba(0,0,0,.1);
+  }
+  .ui-board-region--backbone{
+    border-left: 1px dashed #ccc;
+    border-right: 1px dashed #ccc;
+    box-sizing: border-box;
+  }
+  .ui-board-region--page + .ui-board-region--page{
+    &:after{
+      content: '';
+      border-left: 1px dashed #ccc;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -.5px;
+    }
+  }
 }
 </style>

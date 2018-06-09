@@ -11,5 +11,4 @@ export default {
 </script>
 
 <style lang="less">
-@import "../src/theme/default/main.less";
 </style>

@@ -1,10 +1,10 @@
 <template>
-  <div class="ui-board-align-line">
+  <div class="ui-board-alignline">
     <slot></slot>
     <i
       v-for="(line, index) in lines"
       :key="index"
-      :class="`ui-board-align-line__${line.type}`"
+      :class="`ui-board-alignline__${line.type}`"
       :style="renderLineStyle(line)"
     ></i>
   </div>
@@ -19,7 +19,7 @@ const rangeCompare = (val1, val2, range) => {
 }
 
 export default {
-  name: 'UiAlignLine',
+  name: 'UiBookAlignline',
   props: {
     active: {
       type: Boolean
@@ -175,17 +175,17 @@ export default {
 }
 </script>
 <style>
-.ui-board-align-line{
+.ui-board-alignline{
   position: relative;
 }
-.ui-board-align-line__horizon{
+.ui-board-alignline__horizon{
   position: absolute;
   left: 0;
   right: 0;
   border-top: 1px dashed #000;
   opacity: .5;
 }
-.ui-board-align-line__vertical{
+.ui-board-alignline__vertical{
   position: absolute;
   top: 0;
   bottom: 0;

@@ -1,7 +1,7 @@
 <template>
   <div class="page-book">
     <div style="margin: 30px">
-      <ui-draggable selector=".test">
+      <ui-draggable selector=".test" @drop="handleDrop">
         <div class="test">test1</div>
         <div class="test">test2</div>
         <div class="test">test3</div>
@@ -14,8 +14,8 @@
         :width="realWidth"
         :height="realHeight"
         :zoom="zoom"
-        :pages="pageData"
-        :current-page-index="currentPageIndex"
+        :data="pageData"
+        :page-index="currentPageIndex"
         @page-item-change="handlePageItemChange"
         @page-index-changed="handlePageIndexChanged"
       ></ui-book>
@@ -36,7 +36,7 @@
         zoom: 1,
         ready: false,
         pageData,
-        currentPageIndex: 1
+        currentPageIndex: 0
       }
     },
     mounted () {
@@ -76,6 +76,9 @@
       },
       handlePageIndexChanged (evt) {
         this.currentPageIndex = evt.pageIndex
+      },
+      handleDrop (evt) {
+        console.log(evt)
       }
     },
     beforeDestroy () {

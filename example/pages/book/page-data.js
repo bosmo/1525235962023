@@ -1,14 +1,16 @@
+import {v4} from 'uuid'
 export default [{
   title: '封面',
   type: 'cover',
   bgColor: '#fff',
   left: 0,
   top: 0,
-  width: 300,
-  height: 300,
+  width: 310,
+  height: 320,
+  id: v4(),
   items: [{
     'type': 'text',
-    'id': 'aaa',
+    id: v4(),
     'width': 50,
     'height': 33.89999999999999,
     'left': 0,
@@ -36,16 +38,55 @@ export default [{
     'rotate': 0
   }]
 }, {
-  title: '第1~2页',
-  type: 'page',
+  title: '书脊',
+  type: 'backbone',
   bgColor: '#fff',
+  left: 310,
+  top: 0,
+  width: 30,
+  height: 320,
+  items: [],
+  id: v4(),
+}, {
+  title: '封面里',
+  type: 'insideCover',
+  bgColor: '#999',
   left: 0,
   top: 0,
-  width: 600,
-  height: 300,
+  width: 310,
+  height: 320,
+  id: v4(),
   items: [{
     'type': 'text',
-    'id': 'ccc',
+    id: v4(),
+    'width': 50,
+    'height': 33.89999999999999,
+    'left': 0,
+    'top': 93.83606557377055,
+    'scale': 1,
+    'rotate': 0,
+    'props': {
+      'fontSize': 12,
+      'shadow': {
+        'color': '#f00',
+        'offsetX': 4,
+        'offsetY': 5
+      },
+      'text': '封面里'
+    }
+  }]
+}, {
+  title: '第1页',
+  type: 'page',
+  bgColor: '#fff',
+  left: 310,
+  top: 10,
+  width: 300,
+  height: 300,
+  id: v4(),
+  items: [{
+    'type': 'text',
+    id: v4(),
     'width': 50,
     'height': 33.89999999999999,
     'left': 0,
@@ -63,7 +104,7 @@ export default [{
     }
   }, {
     'type': 'frame',
-    'id': 'ddd',
+    id: v4(),
     'width': 50,
     'height': 100,
     'left': 100,
@@ -73,16 +114,17 @@ export default [{
     'rotate': 0
   }]
 }, {
-  title: '第3~4页',
+  title: '第2页',
   type: 'page',
   bgColor: '#fff',
-  left: 0,
-  top: 0,
-  width: 600,
+  left: 10,
+  top: 10,
+  width: 300,
   height: 300,
+  id: v4(),
   items: [{
     'type': 'text',
-    'id': 'eee',
+    id: v4(),
     'width': 50,
     'height': 33.89999999999999,
     'left': 0,
@@ -100,7 +142,7 @@ export default [{
     }
   }, {
     'type': 'frame',
-    'id': 'fff',
+    id: v4(),
     'width': 50,
     'height': 100,
     'left': 100,
@@ -110,16 +152,17 @@ export default [{
     'rotate': 0
   }]
 }, {
-  title: '第5~6页',
+  title: '第3页',
   type: 'page',
   bgColor: '#fff',
-  left: 0,
-  top: 0,
-  width: 600,
+  left: 310,
+  top: 10,
+  width: 300,
   height: 300,
+  id: v4(),
   items: [{
     'type': 'text',
-    'id': 'ggg',
+    id: v4(),
     'width': 50,
     'height': 33.89999999999999,
     'left': 0,
@@ -137,7 +180,7 @@ export default [{
     }
   }, {
     'type': 'frame',
-    'id': 'hhh',
+    id: v4(),
     'width': 50,
     'height': 100,
     'left': 100,
@@ -147,16 +190,83 @@ export default [{
     'rotate': 0
   }]
 }, {
-  title: '封底',
-  type: 'backcover',
+  title: '第4页',
+  type: 'page',
   bgColor: '#fff',
-  left: 0,
-  top: 0,
+  left: 10,
+  top: 10,
   width: 300,
   height: 300,
+  id: v4(),
   items: [{
     'type': 'text',
-    'id': 'iii',
+    id: v4(),
+    'width': 50,
+    'height': 33.89999999999999,
+    'left': 0,
+    'top': 93.83606557377055,
+    'scale': 1,
+    'rotate': 0,
+    'props': {
+      'fontSize': 12,
+      'shadow': {
+        'color': '#f00',
+        'offsetX': 4,
+        'offsetY': 5
+      },
+      'text': '张胜男4'
+    }
+  }, {
+    'type': 'frame',
+    id: v4(),
+    'width': 50,
+    'height': 100,
+    'left': 100,
+    'top': 93.83606557377055,
+    'scaleX': 1,
+    'scaleY': 1,
+    'rotate': 0
+  }]
+}, {
+  title: '封底里',
+  type: 'insideBackCover',
+  bgColor: '#999',
+  left: 310,
+  top: 0,
+  width: 310,
+  height: 320,
+  id: v4(),
+  items: [{
+    'type': 'text',
+    id: v4(),
+    'width': 50,
+    'height': 33.89999999999999,
+    'left': 0,
+    'top': 93.83606557377055,
+    'scale': 1,
+    'rotate': 0,
+    'props': {
+      'fontSize': 12,
+      'shadow': {
+        'color': '#f00',
+        'offsetX': 4,
+        'offsetY': 5
+      },
+      'text': '封底里'
+    }
+  }]
+}, {
+  title: '封底',
+  type: 'backCover',
+  bgColor: '#fff',
+  left: 340,
+  top: 0,
+  width: 310,
+  height: 320,
+  id: v4(),
+  items: [{
+    'type': 'text',
+    id: v4(),
     'width': 50,
     'height': 33.89999999999999,
     'left': 0,
@@ -174,7 +284,7 @@ export default [{
     }
   }, {
     'type': 'frame',
-    'id': 'jjj',
+    id: v4(),
     'width': 50,
     'height': 100,
     'left': 100,
@@ -183,4 +293,4 @@ export default [{
     'scaleY': 1,
     'rotate': 0
   }]
-}]
+},]

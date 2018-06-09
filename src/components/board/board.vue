@@ -1,5 +1,5 @@
 <template>
-  <ui-board-align-line
+  <div
     class="ui-board"
     ref="alignLine"
     :active="activeLine"
@@ -9,40 +9,30 @@
   >
     <canvas class="ui-board__canvas" :id="id"></canvas>
     <div class="ui-board__elements" v-if="ready" :style="renderElementsStyle()">
-      <component
+      <ui-board-region
         v-for="item in items"
-        :ref="`item-${item.id}`"
         :key="item.id"
-        :id="item.id"
-        :width="item.width"
-        :height="item.height"
-        :left="item.left"
-        :top="item.top"
-        :rotate="item.rotate"
-        :scaleX="item.scaleX"
-        :scaleY="item.scaleY"
-        v-bind="item.props"
-        :is="handleRenderItem(item.type)"
-        @moving="handleItemMoving(item, $event)"
-        @scaling="handleItemScaling(item, $event)"
-        @rotating="handleItemRotating(item, $event)"
-        @selected="handleItemSelected(item)"
-        @deselect="handleItemDeselect(item)"
-      ></component>
+        v-bind="item"
+        @item-moving="handleItemMoving"
+        @item-scaling="handleItemScaling"
+        @item-rotating="handleItemRotating"
+        @item-selected="handleItemSelected(item)"
+        @item-deselect="handleItemDeselect(item)"
+      ></ui-board-region>
     </div>
-  </ui-board-align-line>
+  </div>
 </template>
 <script>
 import { v4 } from 'uuid'
 import { fabric } from 'fabric'
-import interact from 'interactjs'
-import boardItems from './board-items'
-import UiBoardAlignLine from './board-align-line'
+import UiBoardRegion from './board-region'
+import UiBoardAlignline from './board-alignline'
 
 export default {
   name: 'UiBoard',
   components: {
-    UiBoardAlignLine
+    UiBoardRegion,
+    UiBoardAlignline
   },
   provide () {
     return {
@@ -50,30 +40,15 @@ export default {
     }
   },
   props: {
-    bgImageUrl: {
-      type: String
-    },
-    bgImageRepeat: {
-      type: String
-    },
-    bgImageLeft: {
-      type: [String, Number]
-    },
-    bgImageTop: {
-      type: [String, Number]
-    },
-    bgColor: {
-      type: String
+    zoom: {
+      type: Number,
+      default: 1
     },
     width: {
       type: Number
     },
     height: {
       type: Number
-    },
-    zoom: {
-      type: Number,
-      default: 1
     },
     items: {
       type: Array,
@@ -156,81 +131,40 @@ export default {
     })
     this.canvas.on('mouse:down', this.handleCanvasMouseDown)
     this.canvas.on('mouse:up', this.handleCanvasMouseUp)
-    this.interact = interact(this.$el).dropzone({
-      ondropactivate: (event) => {
-        this.$emit('dropactivate', event)
-      },
-      ondragenter: (event) => {
-        this.$emit('dragenter', event)
-      },
-      ondragleave: () => {
-        this.$emit('dragleave', event)
-      },
-      ondrop: (event) => {
-        this.$emit('drop', event)
-      }
-    })
     this.setZoom(this.zoom)
     this.setWidth(this.width)
     this.setHeight(this.height)
     this.ready = true
   },
   methods: {
+    handleItemMoving (evt) {
+      // this.$refs.alignLine.update()
+      this.$emit('item-moving', evt)
+    },
+    handleItemScaling (evt) {
+      // this.$refs.alignLine.update()
+      this.$emit('item-scaling', evt)
+    },
+    handleItemRotating (evt) {
+      // this.$refs.alignLine.update()
+      this.$emit('item-rotating', evt)
+    },
     handleCanvasMouseDown () {
       this.$set(this, 'activeLine', true)
     },
     handleCanvasMouseUp () {
       this.$set(this, 'activeLine', false)
     },
-    /**
-     * 渲染动态新增的组件
-    */
-    handleRenderItem (type) {
-      if (!boardItems[type]) {
-        throw new Error(`Not found component ${type}`)
-      }
-      return boardItems[type]
-    },
-    /**
-     * 移动画板组件触发
-    */
-    handleItemMoving (item, evt) {
-      this.$refs.alignLine.update()
-      this.$emit('item-moving', {
-        item,
-        data: evt
-      })
-    },
-    /**
-     * 旋转画板组件触发
-    */
-    handleItemScaling (item, evt) {
-      this.$refs.alignLine.update()
-      this.$emit('item-scaling', {
-        item,
-        data: evt
-      })
-    },
-    /**
-     * 缩放画板组件触发
-    */
-    handleItemRotating (item, evt) {
-      this.$refs.alignLine.update()
-      this.$emit('item-rotating', {
-        item,
-        data: evt
-      })
-    },
-    handleItemSelected (item) {
+    handleItemSelected ({item}) {
       this.$set(this, 'selectedItem', item)
-      this.$refs.alignLine.update()
+      // this.$refs.alignLine.update()
       this.$emit('item-selected', {
         item
       })
     },
-    handleItemDeselect (item) {
+    handleItemDeselect ({item}) {
       this.$set(this, 'selectedItem', null)
-      this.$refs.alignLine.update()
+      // this.$refs.alignLine.update()
       this.$emit('item-deselect', {
         item
       })

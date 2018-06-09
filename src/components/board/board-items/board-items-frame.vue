@@ -50,12 +50,12 @@ export default {
       type: Number
     }
   },
-  inject: ['UiBoard'],
+  inject: ['UiBoard', 'UiBoardRegion'],
   mounted () {
     this.widget = new fabric.Rect({
       id: this.id,
-      left: this.left,
-      top: this.top,
+      left: this.left + this.UiBoardRegion.left,
+      top: this.top + this.UiBoardRegion.top,
       width: this.width,
       height: this.height,
       fill: 'rgba(0,0,0,0)',
@@ -89,8 +89,8 @@ export default {
     getData () {
       return {
         rotate: this.widget.angle,
-        left: this.widget.left,
-        top: this.widget.top,
+        left: this.widget.left - this.UiBoardRegion.left,
+        top: this.widget.top - this.UiBoardRegion.top,
         scaleX: this.widget.scaleX,
         scaleY: this.widget.scaleY,
         width: this.widget.width,
@@ -104,8 +104,8 @@ export default {
       let top = this.top
       if (this.widget) {
         let {x, y} = this.widget.translateToGivenOrigin(this.widget.getCenterPoint(), 'center', 'center', 0, 0)
-        left = x + 0.5 * this.scaleX
-        top = y + 0.5 * this.scaleY
+        left = x + 0.5 * this.scaleX - this.UiBoardRegion.left
+        top = y + 0.5 * this.scaleY - this.UiBoardRegion.top
       }
       const data = {
         position: 'absolute',
