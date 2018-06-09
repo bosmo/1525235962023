@@ -136,15 +136,63 @@ export default {
     border-left: 1px dashed #ccc;
     border-right: 1px dashed #ccc;
     box-sizing: border-box;
+    position: relative;
+    z-index: 3;
+    &:before{
+      content: '';
+      position: absolute;
+      left: -100px;
+      width: 100px;
+      bottom: 0;
+      top: 0;
+      background-image: -o-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -ms-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -moz-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), #000);
+      opacity: .12;
+    }
+    &:after{
+      content: '';
+      position: absolute;
+      right: -100px;
+      width: 100px;
+      bottom: 0;
+      top: 0;
+      background-image: -o-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -ms-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -moz-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -webkit-linear-gradient(right, rgba(0,0,0,0), #000);
+      opacity: .12;
+    }
+  }
+  .ui-board-region--page{
+    &:after{
+      content: '';
+      position: absolute;
+      right: 0;
+      width: 100px;
+      bottom: 0;
+      top: 0;
+      background-image: -o-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -ms-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -moz-linear-gradient(left, rgba(0,0,0,0), #000);
+      background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), #000);
+      opacity: .15;
+    }
   }
   .ui-board-region--page + .ui-board-region--page{
     &:after{
       content: '';
-      border-left: 1px dashed #ccc;
       position: absolute;
-      top: 0;
+      left: 0;
+      width: 100px;
       bottom: 0;
-      left: -.5px;
+      top: 0;
+      background-image: -o-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -ms-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -moz-linear-gradient(right, rgba(0,0,0,0), #000);
+      background-image: -webkit-linear-gradient(right, rgba(0,0,0,0), #000);
+      opacity: .15;
     }
   }
 }
