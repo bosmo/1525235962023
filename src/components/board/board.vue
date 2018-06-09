@@ -167,7 +167,7 @@ export default {
     handleCanvasMouseUp () {
       this.$set(this, 'activeLine', false)
     },
-    handleItemSelected (page, item) {
+    handleItemSelected (page, {item}) {
       this.$set(this, 'selectedItem', item)
       // this.$refs.alignLine.update()
       this.$emit('item-selected', {
@@ -175,7 +175,7 @@ export default {
         item
       })
     },
-    handleItemDeselect (page, item) {
+    handleItemDeselect (page, {item}) {
       this.$set(this, 'selectedItem', null)
       // this.$refs.alignLine.update()
       this.$emit('item-deselect', {

@@ -155,6 +155,8 @@ export default {
         width: `${width}px`,
         height: `${height}px`,
         fontSize: `${fontSize}px`,
+        fontWeight: `${this.fontWeight}`,
+        fontStyle: `${this.fontStyle}`,
         color: this.fontColor,
         transform: `rotate(${this.rotate}deg)`
       }
