@@ -10,14 +10,14 @@
     <canvas class="ui-board__canvas" :id="id"></canvas>
     <div class="ui-board__elements" v-if="ready" :style="renderElementsStyle()">
       <ui-board-region
-        v-for="item in items"
-        :key="item.id"
-        v-bind="item"
-        @item-moving="handleItemMoving"
-        @item-scaling="handleItemScaling"
-        @item-rotating="handleItemRotating"
-        @item-selected="handleItemSelected(item)"
-        @item-deselect="handleItemDeselect(item)"
+        v-for="page in items"
+        :key="page.id"
+        v-bind="page"
+        @item-moving="handleItemMoving(page, $event)"
+        @item-scaling="handleItemScaling(page, $event)"
+        @item-rotating="handleItemRotating(page, $event)"
+        @item-selected="handleItemSelected(page, $event)"
+        @item-deselect="handleItemDeselect(page, $event)"
       ></ui-board-region>
     </div>
   </div>
@@ -137,17 +137,29 @@ export default {
     this.ready = true
   },
   methods: {
-    handleItemMoving (evt) {
+    handleItemMoving (page, {item, data}) {
       // this.$refs.alignLine.update()
-      this.$emit('item-moving', evt)
+      this.$emit('item-moving', {
+        page,
+        item,
+        data
+      })
     },
-    handleItemScaling (evt) {
+    handleItemScaling (page, {item, data}) {
       // this.$refs.alignLine.update()
-      this.$emit('item-scaling', evt)
+      this.$emit('item-scaling', {
+        page,
+        item,
+        data
+      })
     },
-    handleItemRotating (evt) {
+    handleItemRotating (page, {item, data}) {
       // this.$refs.alignLine.update()
-      this.$emit('item-rotating', evt)
+      this.$emit('item-rotating', {
+        page,
+        item,
+        data
+      })
     },
     handleCanvasMouseDown () {
       this.$set(this, 'activeLine', true)
@@ -155,17 +167,19 @@ export default {
     handleCanvasMouseUp () {
       this.$set(this, 'activeLine', false)
     },
-    handleItemSelected ({item}) {
+    handleItemSelected (page, item) {
       this.$set(this, 'selectedItem', item)
       // this.$refs.alignLine.update()
       this.$emit('item-selected', {
+        page,
         item
       })
     },
-    handleItemDeselect ({item}) {
+    handleItemDeselect (page, item) {
       this.$set(this, 'selectedItem', null)
       // this.$refs.alignLine.update()
       this.$emit('item-deselect', {
+        page,
         item
       })
     },
